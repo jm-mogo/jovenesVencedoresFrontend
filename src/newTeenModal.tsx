@@ -1,11 +1,11 @@
 import { Button, Label, Modal, TextInput } from "flowbite-react";
 import { useRef, useState } from "react";
 
-export default function NewTeenModal() {
+export default function NewTeenModal({ teens, setTeens }: any) {
   const [openModal, setOpenModal] = useState(false);
   const firstNameInputRef = useRef<HTMLInputElement>(null);
   const lastNameInputRef = useRef<HTMLInputElement>(null);
-  const genderInputRef = useRef<HTMLInputElement>(null);
+  const [genderInput, setGenderInput] = useState(undefined);
   const dateOfBirthInputRef = useRef<HTMLInputElement>(null);
   const phoneNumberInputRef = useRef<HTMLInputElement>(null);
   const addressInputRef = useRef<HTMLInputElement>(null);
@@ -16,7 +16,7 @@ export default function NewTeenModal() {
     const data: any = {
       firstName: firstNameInputRef.current?.value,
       lastName: lastNameInputRef.current?.value,
-      gender: genderInputRef.current?.value,
+      gender: genderInput,
       dateOfBirth: dateOfBirthInputRef.current?.value,
     };
 
@@ -37,9 +37,12 @@ export default function NewTeenModal() {
       },
       body: JSON.stringify(data),
     });
-    response = await response.json();
-    console.log(response);
-    console.log(data);
+    if (response.ok) {
+      setOpenModal(false);
+      const { teen } = await response.json();
+      const newTeens = [...teens, teen];
+      setTeens(newTeens);
+    }
   };
   return (
     <>
@@ -81,7 +84,9 @@ export default function NewTeenModal() {
                       id="male"
                       name="gender"
                       value="M"
-                      ref={genderInputRef}
+                      onClick={(event: any) =>
+                        setGenderInput(event.target.value)
+                      }
                       required
                     />
                     <Label htmlFor="male">Masculino</Label>
@@ -92,7 +97,9 @@ export default function NewTeenModal() {
                       id="female"
                       name="gender"
                       value="F"
-                      ref={genderInputRef}
+                      onClick={(event: any) =>
+                        setGenderInput(event.target.value)
+                      }
                       required
                     />
                     <Label htmlFor="female">Femenino</Label>
