@@ -18,7 +18,7 @@ export default function NewParentModal({ parents, setParents }: any) {
       data.phoneNumber = phoneNumberInputRef.current.value;
     }
 
-    let response = await fetch("http://localhost:8800/parents", {
+    let response = await fetch("http://192.168.0.10:8800/parents", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

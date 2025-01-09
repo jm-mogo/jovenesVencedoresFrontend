@@ -6,7 +6,7 @@ function ParentsTable() {
   const [parents, setParents] = useState<[]>([]);
 
   async function fetchParents() {
-    const response = await fetch("http://localhost:8800/parents");
+    const response = await fetch("http://192.168.0.10:8800/parents");
     const data = await response.json();
 
     setParents(data);
@@ -21,10 +21,9 @@ function ParentsTable() {
       <h2 className="text-2xl font-medium text-gray-900 dark:text-white">
         Representantes
       </h2>
-      {/* <NewTeenModal teens={teens} setTeens={setTeens} /> */}
       <NewParentModal parents={parents} setParents={setParents} />
       <div className="overflow-x-auto">
-        <Table hoverable>
+        <Table hoverable className="w-full max-w-lg">
           <Table.Head>
             <Table.HeadCell>Nombre</Table.HeadCell>
 

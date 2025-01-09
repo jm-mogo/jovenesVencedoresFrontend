@@ -1,5 +1,6 @@
-import { Button, Label, Modal, TextInput } from "flowbite-react";
-import { useRef, useState } from "react";
+import { Button, Label, Modal, TextInput, Select } from "flowbite-react";
+import { useRef, useState, useEffect, useId } from "react";
+import { isCompositeComponent } from "react-dom/test-utils";
 
 export default function NewTeenModal({ teens, setTeens }: any) {
   const [openModal, setOpenModal] = useState(false);
@@ -9,7 +10,23 @@ export default function NewTeenModal({ teens, setTeens }: any) {
   const dateOfBirthInputRef = useRef<HTMLInputElement>(null);
   const phoneNumberInputRef = useRef<HTMLInputElement>(null);
   const addressInputRef = useRef<HTMLInputElement>(null);
-  const parentNameInputRef = useRef<HTMLInputElement>(null);
+  const [parentIdSelected, setParentIdSelected] = useState(1);
+  const [parents, setParents] = useState<[]>([]);
+
+  async function fetchParents() {
+    const response = await fetch("http://192.168.0.10:8800/parents");
+    const data = await response.json();
+
+    setParents(data);
+  }
+
+  const handleChangeParentId = (e: any) => {
+    setParentIdSelected(Number(e.target.value));
+  };
+
+  useEffect(() => {
+    fetchParents();
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -18,7 +35,10 @@ export default function NewTeenModal({ teens, setTeens }: any) {
       lastName: lastNameInputRef.current?.value,
       gender: genderInput,
       dateOfBirth: dateOfBirthInputRef.current?.value,
+      parentId: parentIdSelected,
     };
+
+    console.log(parentIdSelected);
 
     if (phoneNumberInputRef.current?.value) {
       data.phoneNumber = phoneNumberInputRef.current.value;
@@ -26,11 +46,8 @@ export default function NewTeenModal({ teens, setTeens }: any) {
     if (addressInputRef.current?.value) {
       data.address = addressInputRef.current.value;
     }
-    if (parentNameInputRef.current?.value) {
-      data.parentName = parentNameInputRef.current.value;
-    }
 
-    let response = await fetch("http://localhost:8800/teens", {
+    let response = await fetch("http://192.168.0.10:8800/teens", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,6 +57,7 @@ export default function NewTeenModal({ teens, setTeens }: any) {
     if (response.ok) {
       setOpenModal(false);
       const { teen } = await response.json();
+      console.log(teen);
       const newTeens = [...teens, teen];
       setTeens(newTeens);
     }
@@ -136,8 +154,14 @@ export default function NewTeenModal({ teens, setTeens }: any) {
               </div>
 
               <div className="mb-2 block">
-                <Label htmlFor="parentName" value="Representante" />
-                <TextInput id="parentName" ref={parentNameInputRef} />
+                <Label htmlFor="parentId" value="Representante" />
+                <Select id="parentId" required onChange={handleChangeParentId}>
+                  {parents.map((parent: any) => (
+                    <option value={parent.id}>
+                      {parent.firstName} {parent.lastName}
+                    </option>
+                  ))}
+                </Select>
               </div>
 
               <div className="text-sm text-gray-500 dark:text-gray-400">
