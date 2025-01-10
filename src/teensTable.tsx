@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import useTeens from "./hooks/useTeens";
 import { Table } from "flowbite-react";
-import NewTeenModal from "./newTeenModal";
+import NewModal from "./NewModal";
 import { Link, useNavigate } from "react-router-dom";
+import NewTeemForm from "./NewTeemForm";
 
 function calculateAge(dateOfBirth: string): number {
   const dob = new Date(dateOfBirth);
@@ -20,25 +21,13 @@ function calculateAge(dateOfBirth: string): number {
 
 function TeensTable() {
   const Navigate = useNavigate();
-  const [teens, setTeens] = useState<[]>([]);
-
-  async function fetchTeens() {
-    const response = await fetch("http://192.168.0.10:8800/teens");
-    const data = await response.json();
-
-    setTeens(data);
-  }
-
-  useEffect(() => {
-    fetchTeens();
-  }, []);
-
+  const { teens } = useTeens();
   return (
     <>
       <h2 className="text-2xl font-medium text-gray-900 dark:text-white">
         Jóvenes
       </h2>
-      <NewTeenModal teens={teens} setTeens={setTeens} />
+      <NewModal children={<NewTeemForm />} label={"Nuevo joven"} />
 
       <div className="overflow-x-auto">
         <Table hoverable className="w-full max-w-lg">
