@@ -1,27 +1,18 @@
-import { useState, useEffect } from "react";
 import { Table } from "flowbite-react";
-import NewParentModal from "./newParentModal";
+
+import NewModal from "./NewModal";
+import NewParentForm from "./NewParentForm";
+import { useParents } from "./hooks/useParents";
 
 function ParentsTable() {
-  const [parents, setParents] = useState<[]>([]);
-
-  async function fetchParents() {
-    const response = await fetch("http://192.168.0.10:8800/parents");
-    const data = await response.json();
-
-    setParents(data);
-  }
-
-  useEffect(() => {
-    fetchParents();
-  }, []);
+  const { parents } = useParents();
 
   return (
     <>
       <h2 className="text-2xl font-medium text-gray-900 dark:text-white">
         Representantes
       </h2>
-      <NewParentModal parents={parents} setParents={setParents} />
+      <NewModal children={<NewParentForm />} label={"Nuevo representante"} />
       <div className="overflow-x-auto">
         <Table hoverable className="w-full max-w-lg">
           <Table.Head>
