@@ -1,8 +1,8 @@
 import { Label, Select, Button } from "flowbite-react";
 import { TextInput } from "flowbite-react/components/TextInput";
 import { useRef, useState } from "react";
-import { Teen } from "../types";
-import { useFetchParents } from "../hooks/useFetchParents";
+import { Teen } from "../../types";
+import { useFetchParents } from "../../hooks/useFetchParents";
 
 export default function NewTeenForm({
   teens,

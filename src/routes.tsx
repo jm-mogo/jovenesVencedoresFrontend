@@ -1,6 +1,6 @@
 import App from "./App";
 
-import TeensTable from "./TeensTable";
+import TeensPage from "./Teens/TeensPage";
 import ParentsTable from "./parentsTable";
 import TeenDetails from "./TeenDetails";
 import Seasons from "./Seasons";
@@ -10,7 +10,7 @@ const routes = [
     element: <App />,
     children: [
       { path: "seasons", element: <Seasons /> },
-      { path: "teens", element: <TeensTable /> },
+      { path: "teens", element: <TeensPage /> },
       { path: "teens/:id", element: <TeenDetails /> },
       { path: "parents", element: <ParentsTable /> },
     ],
