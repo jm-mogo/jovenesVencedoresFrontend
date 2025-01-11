@@ -1,8 +1,9 @@
-import useTeens from "./hooks/useTeens";
+import useFetchTeens from "./hooks/useFetchTeens";
 import { Table } from "flowbite-react";
-import NewModal from "./NewModal";
+import NewModal from "./Components/NewModal";
 import { Link, useNavigate } from "react-router-dom";
-import NewTeemForm from "./NewTeemForm";
+import NewTeenForm from "./Components/NewTeenForm";
+import { Teen } from "./types";
 
 function calculateAge(dateOfBirth: string): number {
   const dob = new Date(dateOfBirth);
@@ -21,13 +22,16 @@ function calculateAge(dateOfBirth: string): number {
 
 function TeensTable() {
   const Navigate = useNavigate();
-  const { teens } = useTeens();
+  const { teens, setTeens } = useFetchTeens();
   return (
     <>
       <h2 className="text-2xl font-medium text-gray-900 dark:text-white">
         Jóvenes
       </h2>
-      <NewModal children={<NewTeemForm />} label={"Nuevo joven"} />
+      <NewModal
+        children={<NewTeenForm teens={teens} setTeens={setTeens} />}
+        label={"Nuevo joven"}
+      />
 
       <div className="overflow-x-auto">
         <Table hoverable className="w-full max-w-lg">
@@ -39,7 +43,7 @@ function TeensTable() {
           </Table.Head>
 
           <Table.Body className="divide-y">
-            {teens.map((teen: any) => (
+            {teens.map((teen: Teen) => (
               <>
                 <Link
                   to={`/teens/${teen.id}`}

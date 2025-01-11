@@ -1,13 +1,7 @@
 import { useState, useEffect } from "react";
+import { Parent } from "../types";
 
-type Parent = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-};
-
-export function useParents() {
+export function useFetchParents() {
   const [parents, setParents] = useState<Parent[]>([]);
 
   async function fetchParents() {

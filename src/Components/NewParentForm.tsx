@@ -1,10 +1,14 @@
 import { Label, TextInput, Button } from "flowbite-react";
 import { useRef } from "react";
-import { useParents } from "./hooks/useParents";
+import { Parent } from "../types";
 
-export default function NewParentForm() {
-  const { parents, setParents } = useParents();
-
+export default function NewParentForm({
+  parents,
+  setParents,
+}: {
+  parents: Parent[];
+  setParents: Function;
+}) {
   const firstNameInputRef = useRef<HTMLInputElement>(null);
   const lastNameInputRef = useRef<HTMLInputElement>(null);
   const phoneNumberInputRef = useRef<HTMLInputElement>(null);
@@ -28,7 +32,7 @@ export default function NewParentForm() {
       body: JSON.stringify(data),
     });
     if (response.ok) {
-      const { parent } = await response.json();
+      const { parent }: { parent: Parent } = await response.json();
       const newParents = [...parents, parent];
       setParents(newParents);
     }

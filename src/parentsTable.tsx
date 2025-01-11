@@ -1,18 +1,21 @@
 import { Table } from "flowbite-react";
 
-import NewModal from "./NewModal";
-import NewParentForm from "./NewParentForm";
-import { useParents } from "./hooks/useParents";
+import NewModal from "./Components/NewModal";
+import NewParentForm from "./Components/NewParentForm";
+import { useFetchParents } from "./hooks/useFetchParents";
 
 function ParentsTable() {
-  const { parents } = useParents();
+  const { parents, setParents } = useFetchParents();
 
   return (
     <>
       <h2 className="text-2xl font-medium text-gray-900 dark:text-white">
         Representantes
       </h2>
-      <NewModal children={<NewParentForm />} label={"Nuevo representante"} />
+      <NewModal
+        children={<NewParentForm parents={parents} setParents={setParents} />}
+        label={"Nuevo representante"}
+      />
       <div className="overflow-x-auto">
         <Table hoverable className="w-full max-w-lg">
           <Table.Head>

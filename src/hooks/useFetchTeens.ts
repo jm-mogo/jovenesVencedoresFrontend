@@ -1,15 +1,7 @@
 import { useState, useEffect } from "react";
+import { Teen } from "../types";
 
-type Teen = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  dateOfBirth: string;
-  phoneNumber: string;
-  address: string;
-};
-
-export default function useTeens() {
+export default function useFetchTeens() {
   const [teens, setTeens] = useState<Teen[]>([]);
 
   async function fetchTeens() {

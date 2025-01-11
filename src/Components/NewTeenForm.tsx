@@ -1,9 +1,16 @@
 import { Label, Select, Button } from "flowbite-react";
 import { TextInput } from "flowbite-react/components/TextInput";
-import { useRef, useState, useEffect } from "react";
-import useTeens from "./hooks/useTeens";
+import { useRef, useState } from "react";
+import { Teen } from "../types";
+import { useFetchParents } from "../hooks/useFetchParents";
 
-export default function NewTeemForm() {
+export default function NewTeenForm({
+  teens,
+  setTeens,
+}: {
+  teens: Teen[];
+  setTeens: Function;
+}) {
   const firstNameInputRef = useRef<HTMLInputElement>(null);
   const lastNameInputRef = useRef<HTMLInputElement>(null);
   const [genderInput, setGenderInput] = useState(undefined);
@@ -11,24 +18,11 @@ export default function NewTeemForm() {
   const phoneNumberInputRef = useRef<HTMLInputElement>(null);
   const addressInputRef = useRef<HTMLInputElement>(null);
   const [parentIdSelected, setParentIdSelected] = useState(1);
-  const [parents, setParents] = useState<[]>([]);
-
-  const { teens, setTeens } = useTeens();
-
-  async function fetchParents() {
-    const response = await fetch("http://192.168.0.10:8800/parents");
-    const data = await response.json();
-
-    setParents(data);
-  }
+  const { parents } = useFetchParents();
 
   const handleChangeParentId = (e: any) => {
     setParentIdSelected(Number(e.target.value));
   };
-
-  useEffect(() => {
-    fetchParents();
-  }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();

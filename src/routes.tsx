@@ -1,8 +1,8 @@
 import App from "./App";
 
-import TeensTable from "./teensTable";
+import TeensTable from "./TeensTable";
 import ParentsTable from "./parentsTable";
-import TeenDetails from "./teenDetails";
+import TeenDetails from "./TeenDetails";
 import Seasons from "./Seasons";
 const routes = [
   {

@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import NewSeasonModal from "./newSeasonModel";
+import NewSeasonForm from "./Components/NewSeasonForm";
+import NewModal from "./Components/NewModal";
+import { Season } from "./types";
 
 function Seasons() {
-  const [seasons, setSeasons] = useState([]);
+  const [seasons, setSeasons] = useState<Season[]>([]);
 
   async function fetchSeasons() {
     const response = await fetch("http://192.168.0.10:8800/seasons");
@@ -19,8 +21,12 @@ function Seasons() {
       <h2 className="text-2xl font-medium text-gray-900 dark:text-white">
         Temporadas
       </h2>
-      <NewSeasonModal seasons={seasons} setSeasons={setSeasons} />
-      {seasons.map((season: any) => (
+      <NewModal
+        children={<NewSeasonForm seasons={seasons} setSeasons={setSeasons} />}
+        label="Nueva temporada"
+      />
+
+      {seasons.map((season: Season) => (
         <p>{season.name}</p>
       ))}
     </>
