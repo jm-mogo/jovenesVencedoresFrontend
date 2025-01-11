@@ -2,7 +2,7 @@ import App from "./App";
 
 import TeensPage from "./Teens/TeensPage";
 import ParentsPage from "./Parents/ParentsPage";
-import TeenDetails from "./TeenDetails";
+import TeenDetails from "./Teens/TeenDetailsPage";
 import SeasonsPage from "./Seasons/SeasonsPage";
 const routes = [
   {

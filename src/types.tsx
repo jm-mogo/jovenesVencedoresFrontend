@@ -3,8 +3,11 @@ export type Teen = {
   firstName: string;
   lastName: string;
   dateOfBirth: string;
+  gender: "M" | "F";
   phoneNumber: string;
   address: string;
+  parentId: number;
+  parent: Parent;
 };
 
 export type Parent = {
