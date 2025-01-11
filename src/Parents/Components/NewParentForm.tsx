@@ -1,6 +1,6 @@
 import { Label, TextInput, Button } from "flowbite-react";
 import { useRef } from "react";
-import { Parent } from "../types";
+import { Parent } from "../../types";
 
 export default function NewParentForm({
   parents,
