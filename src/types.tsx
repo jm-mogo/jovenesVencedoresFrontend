@@ -18,8 +18,17 @@ export type Parent = {
 };
 
 export type Season = {
+  id: number;
   name: string;
-  Teens: [];
-  Meating: [];
-  Members: [];
+  teams: Team[];
+  meating: [];
+  members: [];
+};
+
+export type Team = {
+  id: number;
+  name: string;
+  seasonId: number;
+  teamMemberships: [];
+  points: [];
 };

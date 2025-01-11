@@ -1,7 +1,15 @@
 import { Table } from "flowbite-react/components/Table";
-import { Teen } from "../../types";
+import { useParams } from "react-router-dom";
+import useFetchTeen from "../../hooks/useFetchTeen";
 
-export default function TeenDetailsTable({ teen }: { teen: Teen }) {
+export default function TeenDetailsTable() {
+  const { id } = useParams<{ id: string }>();
+  const { teen } = useFetchTeen(id);
+
+  if (teen == undefined) {
+    return <h2>Not found</h2>;
+  }
+
   return (
     <div>
       <Table className="w-ful max-w-lg ">
