@@ -4,6 +4,7 @@ import { Table } from "flowbite-react";
 
 export default function TeensTable({ teens }: { teens: Teen[] }) {
   const Navigate = useNavigate();
+
   return (
     <div className="overflow-x-auto">
       <Table hoverable className="w-full max-w-lg">

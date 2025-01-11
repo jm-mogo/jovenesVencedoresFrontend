@@ -1,6 +1,6 @@
 import { Button, Label, TextInput } from "flowbite-react";
 import { useRef } from "react";
-import { Season } from "../types";
+import { Season } from "../../types";
 
 export default function NewSeasonForm({
   seasons,

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import NewSeasonForm from "./Components/NewSeasonForm";
-import NewModal from "./Components/NewModal";
-import { Season } from "./types";
+import NewModal from "../Components/NewModal";
+import { Season } from "../types";
 
-function Seasons() {
+export default function SeasonsPage() {
   const [seasons, setSeasons] = useState<Season[]>([]);
 
   async function fetchSeasons() {
@@ -32,5 +32,3 @@ function Seasons() {
     </>
   );
 }
-
-export default Seasons;

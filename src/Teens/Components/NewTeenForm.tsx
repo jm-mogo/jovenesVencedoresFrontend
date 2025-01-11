@@ -34,8 +34,6 @@ export default function NewTeenForm({
       parentId: parentIdSelected,
     };
 
-    console.log(parentIdSelected);
-
     if (phoneNumberInputRef.current?.value) {
       data.phoneNumber = phoneNumberInputRef.current.value;
     }
@@ -52,7 +50,6 @@ export default function NewTeenForm({
     });
     if (response.ok) {
       const { teen } = await response.json();
-      console.log(teen);
       const newTeens = [...teens, teen];
       setTeens(newTeens);
     }
