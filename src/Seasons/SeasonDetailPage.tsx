@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Season, Team } from "../types";
+import { Meeting, Season, Team } from "../types";
 import { HiArrowLeft } from "react-icons/hi";
 import { Card, Button } from "flowbite-react";
 import { Timeline } from "flowbite-react";
@@ -39,11 +39,23 @@ export default function SeasonDetailPage() {
       <TeamsCard teams={season.teams} />
 
       <div className="max-w-lg">
-        <h2 className="p-4 text-2xl font-medium text-gray-900 dark:text-white">
-          Reuniones
-        </h2>
-        <MeatingTimeline />
+        <div className="mb-4 flex items-center justify-between">
+          <h4 className="p-4 text-2xl font-medium text-gray-900 dark:text-white">
+            Reuniones
+          </h4>
+          <a
+            href="#"
+            className="text-sm font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+          >
+            Registrar nueva reunion
+          </a>
+        </div>
+
+        <MeatingTimeline meetings={season.meetings} />
       </div>
+      <pre className="mt-4 rounded-lg bg-gray-100 p-4 dark:bg-gray-800">
+        <code>{JSON.stringify(season, null, 2)}</code>
+      </pre>
     </>
   );
 }
@@ -57,12 +69,12 @@ function TeamsCard({ teams }: { teams: Team[] }) {
         <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
           Equipos
         </h5>
-        <a
-          href="#"
+        <Link
+          to={`/seasons/${teams[0].seasonId}/teams`}
           className="text-sm font-medium text-cyan-600 hover:underline dark:text-cyan-500"
         >
-          crear equipo
-        </a>
+          administrar equipos
+        </Link>
       </div>
       <div className="flow-root">
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -88,47 +100,28 @@ function TeamsCard({ teams }: { teams: Team[] }) {
 
 ("use client");
 
-function MeatingTimeline() {
+function MeatingTimeline({ meetings }: { meetings: Meeting[] }) {
   return (
     <Timeline>
-      <Timeline.Item>
-        <Timeline.Point icon={HiCalendar} />
-        <Timeline.Content>
-          <Timeline.Time>Application UI code in Tailwind CSS</Timeline.Time>
-          <Timeline.Title>20 de Nov 2022</Timeline.Title>
-          <Timeline.Body>
-            Get access to over 20+ pages including a dashboard layout, charts,
-            kanban board, calendar, and pre-order E-commerce & Marketing pages.
-          </Timeline.Body>
-          <Button color="gray">
-            Learn More
-            <HiArrowNarrowRight className="ml-2 h-3 w-3" />
-          </Button>
-        </Timeline.Content>
-      </Timeline.Item>
-      <Timeline.Item>
-        <Timeline.Point icon={HiCalendar} />
-        <Timeline.Content>
-          <Timeline.Time>March 2022</Timeline.Time>
-          <Timeline.Title>Marketing UI design in Figma</Timeline.Title>
-          <Timeline.Body>
-            All of the pages and TeamsCards are first designed in Figma and we
-            keep a parity between the two versions even as we update the
-            project.
-          </Timeline.Body>
-        </Timeline.Content>
-      </Timeline.Item>
-      <Timeline.Item>
-        <Timeline.Point icon={HiCalendar} />
-        <Timeline.Content>
-          <Timeline.Time>April 2022</Timeline.Time>
-          <Timeline.Title>E-Commerce UI code in Tailwind CSS</Timeline.Title>
-          <Timeline.Body>
-            Get started with dozens of web TeamsCards and interactive elements
-            built on top of Tailwind CSS.
-          </Timeline.Body>
-        </Timeline.Content>
-      </Timeline.Item>
+      {meetings.map((meeting) => (
+        <Timeline.Item>
+          <Timeline.Point icon={HiCalendar} />
+          <Timeline.Content>
+            <Timeline.Title>
+              {new Date(meeting.date).toDateString()}
+            </Timeline.Title>
+            <Timeline.Body>
+              Get access to over 20+ pages including a dashboard layout, charts,
+              kanban board, calendar, and pre-order E-commerce & Marketing
+              pages.
+            </Timeline.Body>
+            <Button color="gray">
+              Learn More
+              <HiArrowNarrowRight className="ml-2 h-3 w-3" />
+            </Button>
+          </Timeline.Content>
+        </Timeline.Item>
+      ))}
     </Timeline>
   );
 }

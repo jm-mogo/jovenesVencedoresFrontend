@@ -21,7 +21,7 @@ export type Season = {
   id: number;
   name: string;
   teams: Team[];
-  meating: [];
+  meetings: [];
   members: [];
 };
 
@@ -31,4 +31,24 @@ export type Team = {
   seasonId: number;
   teamMemberships: [];
   points: [];
+};
+
+export type Meeting = {
+  id: number;
+  date: string;
+  points: PointRecord[];
+  attendances: Attendance[];
+};
+
+export type PointRecord = {
+  id: number;
+  points: number;
+  meetingId: number;
+  teamId: number;
+};
+
+export type Attendance = {
+  id: number;
+  meetingId: number;
+  present: boolean;
 };

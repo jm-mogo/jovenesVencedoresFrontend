@@ -13,11 +13,11 @@ export default function NewSeasonForm({
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const data: any = {
+    const data: { name: string | undefined } = {
       name: seasonNameInputRef.current?.value,
     };
 
-    let response = await fetch("http://192.168.0.10:8800/seasons", {
+    const response = await fetch("http://192.168.0.10:8800/seasons", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
