@@ -41,7 +41,7 @@ export default function NewTeenForm({
       data.address = addressInputRef.current.value;
     }
 
-    let response = await fetch("http://192.168.0.10:8800/teens", {
+    let response = await fetch("http://127.0.0.1:8800/teens", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

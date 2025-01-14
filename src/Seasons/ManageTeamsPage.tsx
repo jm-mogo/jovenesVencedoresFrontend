@@ -13,7 +13,7 @@ export default function ManageTeamsPage() {
 
   const fetchTeamsBySeason = async () => {
     const response = await fetch(
-      `http://192.168.0.10:8800/seasons/${id}/teams`,
+      `http://127.0.0.1:8800/seasons/${id}/teams`,
     );
     const data = await response.json();
 

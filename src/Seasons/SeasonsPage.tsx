@@ -9,7 +9,7 @@ export default function SeasonsPage() {
   const [seasons, setSeasons] = useState<Season[]>([]);
 
   async function fetchSeasons() {
-    const response = await fetch("http://192.168.0.10:8800/seasons");
+    const response = await fetch("http://127.0.0.1:8800/seasons");
     const data = await response.json();
     setSeasons(data);
   }

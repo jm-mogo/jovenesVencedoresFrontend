@@ -11,7 +11,7 @@ export default function SeasonDetailPage() {
   const [season, setSeason] = useState<Season>();
 
   async function featchSeason() {
-    const response = await fetch(`http://192.168.0.10:8800/seasons/${id}`);
+    const response = await fetch(`127.0.0.1:8800/seasons/${id}`);
     const data: Season = await response.json();
     setSeason(data);
   }
