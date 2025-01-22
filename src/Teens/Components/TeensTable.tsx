@@ -1,5 +1,5 @@
 import { Teen } from "../../types";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Table } from "flowbite-react";
 
 export default function TeensTable({ teens }: { teens: Teen[] }) {
@@ -17,10 +17,6 @@ export default function TeensTable({ teens }: { teens: Teen[] }) {
         <Table.Body className="divide-y">
           {teens.map((teen: Teen) => (
             <>
-              <Link
-                to={`/teens/${teen.id}`}
-                className="text-blue-500 hover:text-blue-700"
-              ></Link>
               <Table.Row
                 className="cursor-pointer bg-white dark:border-gray-700 dark:bg-gray-800"
                 onClick={() => {

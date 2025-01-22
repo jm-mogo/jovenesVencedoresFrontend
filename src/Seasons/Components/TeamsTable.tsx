@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Table } from "flowbite-react";
 import { Team } from "../../types";
 
 export default function TeamsTable() {
+  const Navigate = useNavigate();
   const { id } = useParams();
 
   const [teams, setTeams] = useState<Team[]>([]);
@@ -33,7 +34,12 @@ export default function TeamsTable() {
         <Table.Body className="divide-y">
           {teams.map((team: Team) => (
             <>
-              <Table.Row className="cursor-pointer bg-white dark:border-gray-700 dark:bg-gray-800">
+              <Table.Row
+                className="cursor-pointer bg-white dark:border-gray-700 dark:bg-gray-800"
+                onClick={() => {
+                  Navigate(`/teams/${team.id}`);
+                }}
+              >
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                   {team.name}
                 </Table.Cell>
