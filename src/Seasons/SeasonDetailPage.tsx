@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { Season } from "../types";
 import TeamsTable from "./Components/TeamsTable";
 import LinkBack from "../Components/LinkBack";
+import NewModal from "../Components/NewModal";
+import NewTeamForm from "./Components/NewTeamForm";
 
 export default function SeasonDetailPage() {
   const { id } = useParams();
@@ -37,12 +39,10 @@ export default function SeasonDetailPage() {
           <h4 className="p-4 text-2xl font-medium text-gray-900 dark:text-white">
             Equipos
           </h4>
-          <a
-            href="#"
-            className="text-sm font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-          >
-            Registrar nueva equipo
-          </a>
+          <NewModal
+            children={<NewTeamForm seasonId={Number(id)} />}
+            label={"Nuevo equipo"}
+          />
         </div>
         <TeamsTable />
       </div>

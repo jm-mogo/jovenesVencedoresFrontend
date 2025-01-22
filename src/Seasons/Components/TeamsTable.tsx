@@ -33,7 +33,7 @@ export default function TeamsTable() {
         <Table.Body className="divide-y">
           {teams.map((team: Team) => (
             <>
-              <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+              <Table.Row className="cursor-pointer bg-white dark:border-gray-700 dark:bg-gray-800">
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                   {team.name}
                 </Table.Cell>
