@@ -23,7 +23,7 @@ export default function TeensTable({ teens }: { teens: Teen[] }) {
                 className="text-blue-500 hover:text-blue-700"
               ></Link>
               <Table.Row
-                className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                className="cursor-pointer bg-white dark:border-gray-700 dark:bg-gray-800"
                 onClick={() => {
                   Navigate(`/teens/${teen.id}`);
                 }}
