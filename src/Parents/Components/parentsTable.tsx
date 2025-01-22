@@ -3,16 +3,12 @@ import { Table } from "flowbite-react";
 
 export default function ParentsTable({ parents }: { parents: Parent[] }) {
   return (
-    <div className="overflow-x-auto">
+    <div className="">
       <Table hoverable className="w-full max-w-lg">
         <Table.Head>
           <Table.HeadCell>Nombre</Table.HeadCell>
 
           <Table.HeadCell>Teléfono</Table.HeadCell>
-
-          <Table.HeadCell>
-            <span className="sr-only">Edit</span>
-          </Table.HeadCell>
         </Table.Head>
 
         <Table.Body className="divide-y">
@@ -24,15 +20,6 @@ export default function ParentsTable({ parents }: { parents: Parent[] }) {
                 </Table.Cell>
 
                 <Table.Cell>{parent.phoneNumber || "no registrado"}</Table.Cell>
-
-                <Table.Cell>
-                  <a
-                    href="#"
-                    className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                  >
-                    Edit
-                  </a>
-                </Table.Cell>
               </Table.Row>
             </>
           ))}

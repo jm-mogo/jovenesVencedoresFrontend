@@ -6,13 +6,12 @@ export default function TeensTable({ teens }: { teens: Teen[] }) {
   const Navigate = useNavigate();
 
   return (
-    <div className="overflow-x-auto">
+    <div className="">
       <Table hoverable className="w-full max-w-lg">
         <Table.Head>
           <Table.HeadCell>Nombre</Table.HeadCell>
           <Table.HeadCell>Edad</Table.HeadCell>
           <Table.HeadCell>Teléfono</Table.HeadCell>
-          <Table.HeadCell>Dirección</Table.HeadCell>
         </Table.Head>
 
         <Table.Body className="divide-y">
@@ -33,7 +32,6 @@ export default function TeensTable({ teens }: { teens: Teen[] }) {
                 </Table.Cell>
                 <Table.Cell>{calculateAge(teen.dateOfBirth)}</Table.Cell>
                 <Table.Cell>{teen.phoneNumber || "no registrado"}</Table.Cell>
-                <Table.Cell>{teen.address || "no registrado"}</Table.Cell>
               </Table.Row>
             </>
           ))}
