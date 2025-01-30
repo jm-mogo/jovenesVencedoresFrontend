@@ -45,20 +45,35 @@ export default function AddMemberForm({
     }
   };
 
+  if (teens.length == 0) {
+    return (
+      <div className="p-4">
+        <h3 className="text-2xl font-medium text-gray-900 dark:text-white">
+          No hay jóvenes sin equipo en esta temporada.
+        </h3>
+      </div>
+    );
+  }
+
   return (
-    <>
-      <h2>Jóvenes sin equipo</h2>
+    <div className="space-y-4">
+      <h3 className="text-2xl font-medium text-gray-900 dark:text-white">
+        Jóvenes sin equipo
+      </h3>
+
       <ul>
         {teens.map((teen) => (
           <div>
-            <li className="flex items-center justify-between">
+            <li className="flex items-center justify-between py-4">
               {teen.firstName} {teen.lastName}
-              <Button onClick={() => addMember(teen.id)}>añadir</Button>
+              <Button size={"sm"} onClick={() => addMember(teen.id)}>
+                añadir
+              </Button>
             </li>
             <hr />
           </div>
         ))}
       </ul>
-    </>
+    </div>
   );
 }

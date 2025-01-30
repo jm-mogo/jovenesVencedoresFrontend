@@ -16,7 +16,6 @@ export default function TeamManagementPage() {
   async function fetchTeam() {
     const response = await fetch(`http://127.0.0.1:8800/teams/${id}`);
     const data: Team = await response.json();
-    console.log("data fetch");
     setTeam(data);
   }
 
@@ -47,7 +46,7 @@ export default function TeamManagementPage() {
             label={"Añadir miembros"}
           />
         </div>
-        <MembersTable team={team} />
+        <MembersTable team={team} fetchTeam={fetchTeam} />
       </div>
     </>
   );
