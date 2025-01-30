@@ -1,8 +1,17 @@
 import { Button, Label, TextInput } from "flowbite-react";
-import { useRef } from "react";
+import { Dispatch, useRef } from "react";
+import { Season } from "../../types";
 
-export default function NewTeamForm({ seasonId }: { seasonId: number }) {
+export default function NewTeamForm({
+  season,
+  setSeason,
+}: {
+  season: Season;
+  setSeason: Dispatch<Season>;
+}) {
   const teamNameInputRef = useRef<HTMLInputElement>(null);
+
+  const seasonId = season.id;
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -19,7 +28,9 @@ export default function NewTeamForm({ seasonId }: { seasonId: number }) {
       body: JSON.stringify(data),
     });
     if (response.ok) {
-      window.location.reload();
+      const newSeason = { ...season };
+      newSeason.teams.push(await response.json());
+      setSeason(newSeason);
     }
   };
   return (

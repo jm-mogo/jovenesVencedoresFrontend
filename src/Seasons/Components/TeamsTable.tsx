@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Table } from "flowbite-react";
-import { Team } from "../../types";
+import { Season, Team } from "../../types";
 
-export default function TeamsTable() {
+export default function TeamsTable({ season }: { season: Season }) {
   const Navigate = useNavigate();
-  const { id } = useParams();
+  const id = season.id;
 
   const [teams, setTeams] = useState<Team[]>([]);
 
@@ -19,7 +19,7 @@ export default function TeamsTable() {
 
   useEffect(() => {
     fetchTeamsBySeason();
-  }, []);
+  }, [season]);
 
   return (
     <div className="">

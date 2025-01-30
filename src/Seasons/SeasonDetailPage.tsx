@@ -24,6 +24,8 @@ export default function SeasonDetailPage() {
     return <h1>No se encontró</h1>;
   }
 
+  console.log(season);
+
   return (
     <>
       <LinkBack to={"/seasons"}>
@@ -40,11 +42,11 @@ export default function SeasonDetailPage() {
             Equipos
           </h4>
           <NewModal
-            children={<NewTeamForm seasonId={Number(id)} />}
+            children={<NewTeamForm season={season} setSeason={setSeason} />}
             label={"Nuevo equipo"}
           />
         </div>
-        <TeamsTable />
+        <TeamsTable season={season} />
       </div>
 
       <div className="max-w-lg">
