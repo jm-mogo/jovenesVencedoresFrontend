@@ -17,15 +17,15 @@ export function SidebarComponent() {
           <Sidebar.Item href="#" icon={HiChartPie}>
             Dashboard
           </Sidebar.Item>
-          <Sidebar.Item icon={HiViewBoards}>
-            <Link to={"/seasons"}>Temporadas</Link>
-          </Sidebar.Item>
-          <Sidebar.Item icon={HiUserGroup}>
-            <Link to={"/teens"}>Jovenes</Link>
-          </Sidebar.Item>
-          <Sidebar.Item icon={HiUsers}>
-            <Link to={"/parents"}>Representantes</Link>
-          </Sidebar.Item>
+          <Link to={"/seasons"}>
+            <Sidebar.Item icon={HiViewBoards}>Temporadas</Sidebar.Item>
+          </Link>
+          <Link to={"/teens"}>
+            <Sidebar.Item icon={HiUserGroup}>Jovenes</Sidebar.Item>
+          </Link>
+          <Link to={"/parents"}>
+            <Sidebar.Item icon={HiUsers}>Representantes</Sidebar.Item>
+          </Link>
           <Sidebar.Item href="#" icon={HiBriefcase}>
             Equipo de trabajo
           </Sidebar.Item>
