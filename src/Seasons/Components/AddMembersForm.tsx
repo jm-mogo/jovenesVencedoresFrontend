@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
-import { Teen } from "../../types";
+import { Team, Teen } from "../../types";
 import { Button } from "flowbite-react";
 
 export default function AddMemberForm({
-  seasonId,
-  teamId,
+  team,
+  fetchTeam,
 }: {
-  seasonId: number;
-  teamId: number;
+  team: Team;
+  fetchTeam: any;
 }) {
   const [teens, setTeens] = useState<Teen[]>([]);
 
+  const seasonId = team.seasonId;
+  const teamId = team.id;
+
   async function fetchTeens() {
-    console.log(seasonId);
     const response = await fetch(
       `http://127.0.0.1:8800/seasons/${seasonId}/teens`,
     );
@@ -39,6 +41,7 @@ export default function AddMemberForm({
     });
     if (response.ok) {
       fetchTeens();
+      fetchTeam();
     }
   };
 

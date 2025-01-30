@@ -1,6 +1,8 @@
 import { Table } from "flowbite-react/components/Table";
 import { useEffect, useState } from "react";
 
+import { Team } from "../../types";
+
 type Membership = {
   id: number;
   teamId: number;
@@ -11,7 +13,8 @@ type Membership = {
   };
 };
 
-export default function MembersTable({ teamId }: { teamId: string }) {
+export default function MembersTable({ team }: { team: Team }) {
+  const teamId = team.id;
   const [memberships, setMemberships] = useState<Membership[]>([]);
 
   async function fetchTeen() {
@@ -24,7 +27,7 @@ export default function MembersTable({ teamId }: { teamId: string }) {
 
   useEffect(() => {
     fetchTeen();
-  }, []);
+  }, [team]);
 
   if (memberships == undefined) {
     return "no hay datos";
