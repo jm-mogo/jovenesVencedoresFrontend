@@ -7,6 +7,7 @@ import {
   HiUsers,
   HiBriefcase,
 } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 export function SidebarComponent() {
   return (
@@ -16,14 +17,14 @@ export function SidebarComponent() {
           <Sidebar.Item href="#" icon={HiChartPie}>
             Dashboard
           </Sidebar.Item>
-          <Sidebar.Item href="/seasons" icon={HiViewBoards}>
-            Temporadas
+          <Sidebar.Item icon={HiViewBoards}>
+            <Link to={"/seasons"}>Temporadas</Link>
           </Sidebar.Item>
-          <Sidebar.Item href="/teens" icon={HiUserGroup}>
-            Jovenes
+          <Sidebar.Item icon={HiUserGroup}>
+            <Link to={"/teens"}>Jovenes</Link>
           </Sidebar.Item>
-          <Sidebar.Item href="/parents" icon={HiUsers}>
-            Representantes
+          <Sidebar.Item icon={HiUsers}>
+            <Link to={"/parents"}>Representantes</Link>
           </Sidebar.Item>
           <Sidebar.Item href="#" icon={HiBriefcase}>
             Equipo de trabajo
