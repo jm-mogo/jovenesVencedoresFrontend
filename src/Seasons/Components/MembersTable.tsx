@@ -1,6 +1,7 @@
 import { Table } from "flowbite-react/components/Table";
 import { useEffect, useState } from "react";
 import { Team } from "../../types";
+import { AlertModal } from "../../Components/AlertModal";
 
 type Membership = {
   id: number;
@@ -66,9 +67,18 @@ export default function MembersTable({
                   {membership.teen.firstName} {membership.teen.lastName}
                 </Table.Cell>
                 <Table.Cell className="whitespace-nowrap font-medium text-red-500">
-                  <button onClick={() => removeMember(membership.id)}>
-                    Remove
-                  </button>
+                  <AlertModal
+                    label={"Eliminar"}
+                    handleYes={() => {
+                      removeMember(membership.id);
+                    }}
+                  >
+                    Seguro que quiere remover a{" "}
+                    <strong>
+                      {membership.teen.firstName} {membership.teen.lastName}
+                    </strong>{" "}
+                    del equipo <strong>{team.name} </strong>
+                  </AlertModal>
                 </Table.Cell>
               </Table.Row>
             </>
