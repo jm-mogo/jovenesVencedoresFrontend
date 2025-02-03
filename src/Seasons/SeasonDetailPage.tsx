@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Season } from "../types";
+import { Link, useParams } from "react-router-dom";
+import { Meeting, Season } from "../types";
 import TeamsTable from "./Components/TeamsTable";
 import LinkBack from "../Components/LinkBack";
 import NewModal from "../Components/NewModal";
 import NewTeamForm from "./Components/NewTeamForm";
+import NewMeetingForm from "./Components/NewMeetingForm";
+import { Timeline, Button } from "flowbite-react";
+import { HiCalendar, HiArrowNarrowRight } from "react-icons/hi";
+import dateParser from "../dateParser";
 
 export default function SeasonDetailPage() {
   const { id } = useParams();
@@ -23,8 +27,6 @@ export default function SeasonDetailPage() {
   if (season === undefined) {
     return <h1>No se encontró</h1>;
   }
-
-  console.log(season);
 
   return (
     <>
@@ -54,42 +56,38 @@ export default function SeasonDetailPage() {
           <h4 className="p-4 text-2xl font-medium text-gray-900 dark:text-white">
             Reuniones
           </h4>
-          <a
-            href="#"
-            className="text-sm font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-          >
-            Registrar nueva reunion
-          </a>
+          <NewModal
+            children={<NewMeetingForm season={season} setSeason={setSeason} />}
+            label={"Registrar reunión"}
+          />
         </div>
 
-        {/* <MeatingTimeline meetings={season.meetings} /> */}
+        <MeatingTimeline meetings={season.meetings} />
       </div>
     </>
   );
 }
 
-// function MeatingTimeline({ meetings }: { meetings: Meeting[] }) {
-//   return (
-//     <Timeline>
-//       {meetings.map((meeting) => (
-//         <Timeline.Item>
-//           <Timeline.Point icon={HiCalendar} />
-//           <Timeline.Content>
-//             <Timeline.Title>
-//               {new Date(meeting.date).toDateString()}
-//             </Timeline.Title>
-//             <Timeline.Body>
-//               Get access to over 20+ pages including a dashboard layout, charts,
-//               kanban board, calendar, and pre-order E-commerce & Marketing
-//               pages.
-//             </Timeline.Body>
-//             <Button color="gray">
-//               Learn More
-//               <HiArrowNarrowRight className="ml-2 h-3 w-3" />
-//             </Button>
-//           </Timeline.Content>
-//         </Timeline.Item>
-//       ))}
-//     </Timeline>
-//   );
-// }
+function MeatingTimeline({ meetings }: { meetings: Meeting[] }) {
+  return (
+    <Timeline>
+      {meetings.map((meeting) => (
+        <Timeline.Item>
+          <Timeline.Point icon={HiCalendar} />
+          <Timeline.Content>
+            <Timeline.Title>{dateParser(meeting.date)}</Timeline.Title>
+            <Timeline.Body>
+              Asistencia: {meeting.attendances ? meeting.attendances.length : 0}
+            </Timeline.Body>
+            <Link to={"/meetings/" + meeting.id}>
+              <Button className="flex items-center" color="gray">
+                Detalles
+                <HiArrowNarrowRight className="ml-2 size-3" />
+              </Button>
+            </Link>
+          </Timeline.Content>
+        </Timeline.Item>
+      ))}
+    </Timeline>
+  );
+}

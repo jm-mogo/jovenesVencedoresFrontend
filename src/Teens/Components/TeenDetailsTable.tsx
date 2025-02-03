@@ -1,6 +1,7 @@
 import { Table } from "flowbite-react/components/Table";
 import { useParams } from "react-router-dom";
 import useFetchTeen from "../../hooks/useFetchTeen";
+import dateParser from "../../dateParser";
 
 export default function TeenDetailsTable() {
   const { id } = useParams<{ id: string }>();
@@ -51,7 +52,7 @@ export default function TeenDetailsTable() {
               Fecha de nacimiento
             </Table.Cell>
             <Table.Cell className="font-medium text-gray-900">
-              {teen.dateOfBirth && new Date(teen.dateOfBirth).toDateString()}
+              {teen.dateOfBirth && dateParser(teen.dateOfBirth)}
             </Table.Cell>
           </Table.Row>
           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
