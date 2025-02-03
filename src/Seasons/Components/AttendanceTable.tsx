@@ -2,7 +2,7 @@ import { Table } from "flowbite-react/components/Table";
 import { useEffect, useState } from "react";
 import { AlertModal } from "../../Components/AlertModal";
 import { useParams } from "react-router-dom";
-import { Membership } from "../../types";
+import { Meeting, Membership } from "../../types";
 
 type AttandanceMeeting = {
   id: number;
@@ -11,10 +11,16 @@ type AttandanceMeeting = {
   teamMembership: Membership;
 };
 
-export default function AttendanceTable() {
+export default function AttendanceTable({
+  meeting,
+  fetchMeeting,
+}: {
+  meeting: Meeting;
+  fetchMeeting: any;
+}) {
   const { id } = useParams();
   console.log(id);
-  const [attandancesMeeting, setAttandancesMeeting] = useState<
+  const [attendancesMeeting, setAttendancesMeeting] = useState<
     AttandanceMeeting[]
   >([]);
 
@@ -23,30 +29,30 @@ export default function AttendanceTable() {
       `http://127.0.0.1:8800/meetings/${id}/attendances`,
     );
     const data = await response.json();
-    setAttandancesMeeting(data);
+    setAttendancesMeeting(data);
   }
 
   useEffect(() => {
     fetchTeen();
-  }, []);
+  }, [meeting]);
 
-  if (attandancesMeeting == undefined) {
+  if (attendancesMeeting == undefined) {
     return "no hay datos";
   }
 
-  console.log(attandancesMeeting);
+  console.log(attendancesMeeting);
 
-  // const removeMember = async (memberId: number) => {
-  //   const response = await fetch(
-  //     "http://127.0.0.1:8800/teamMemberships/" + memberId,
-  //     {
-  //       method: "DELETE",
-  //     },
-  //   );
-  //   if (response.ok) {
-  //     fetchTeam();
-  //   }
-  // };
+  const removeAttendance = async (attendanceId: number) => {
+    const response = await fetch(
+      "http://127.0.0.1:8800/attendances/" + attendanceId,
+      {
+        method: "DELETE",
+      },
+    );
+    if (response.ok) {
+      fetchMeeting();
+    }
+  };
 
   return (
     <div className="">
@@ -57,25 +63,26 @@ export default function AttendanceTable() {
         </Table.Head>
 
         <Table.Body className="divide-y">
-          {attandancesMeeting.map((Attendance) => (
+          {attendancesMeeting.map((attendance) => (
             <>
               <Table.Row className=" bg-white dark:border-gray-700 dark:bg-gray-800">
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                  {Attendance.teamMembership.teen.firstName}{" "}
-                  {Attendance.teamMembership.teen.lastName}{" "}
+                  {attendance.teamMembership.teen.firstName}{" "}
+                  {attendance.teamMembership.teen.lastName}{" "}
                 </Table.Cell>
                 <Table.Cell className="whitespace-nowrap font-medium text-red-500">
                   <AlertModal
                     label={"Eliminar"}
                     handleYes={() => {
-                      // removeMember(membership.id);
+                      removeAttendance(attendance.id);
                     }}
                   >
                     Seguro que quiere remover a{" "}
                     <strong>
-                      {/* {membership.teen.firstName} {membership.teen.lastName} */}
+                      {attendance.teamMembership.teen.firstName}{" "}
+                      {attendance.teamMembership.teen.lastName}
                     </strong>{" "}
-                    {/* del equipo <strong>{team.name} </strong> */}
+                    de la asistencia
                   </AlertModal>
                 </Table.Cell>
               </Table.Row>

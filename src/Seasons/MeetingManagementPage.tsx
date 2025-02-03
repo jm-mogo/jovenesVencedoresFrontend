@@ -6,6 +6,7 @@ import dateParser from "../dateParser";
 import AttendanceTable from "./Components/AttendanceTable";
 import AddAttendanceForm from "./Components/AddAttendanceForm";
 import NewModal from "../Components/NewModal";
+import PointsTable from "./Components/PointsTable";
 
 export default function MeetingManagementPage() {
   const { id } = useParams();
@@ -36,14 +37,28 @@ export default function MeetingManagementPage() {
       <div className="max-w-lg">
         <div className="mb-4 flex items-center justify-between">
           <h4 className="p-4 text-2xl font-medium text-gray-900 dark:text-white">
+            Puntos
+          </h4>
+        </div>
+        <PointsTable meeting={meeting} />
+      </div>
+
+      <div className="max-w-lg">
+        <div className="mb-4 flex items-center justify-between">
+          <h4 className="p-4 text-2xl font-medium text-gray-900 dark:text-white">
             Lista de asistencia
           </h4>
           <NewModal
-            children={<AddAttendanceForm meeting={meeting} />}
+            children={
+              <AddAttendanceForm
+                meeting={meeting}
+                fetchMeeting={fetchMeeting}
+              />
+            }
             label={"Añadir asistencias"}
           />
         </div>
-        <AttendanceTable />
+        <AttendanceTable meeting={meeting} fetchMeeting={fetchMeeting} />
       </div>
     </>
   );

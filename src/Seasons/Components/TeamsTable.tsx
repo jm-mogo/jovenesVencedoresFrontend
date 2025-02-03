@@ -49,7 +49,11 @@ export default function TeamsTable({ season }: { season: Season }) {
                 </Table.Cell>
 
                 <Table.Cell className="whitespace-nowrap text-right font-medium text-gray-900 dark:text-white">
-                  {team.points.length}
+                  {team.points.reduce(
+                    (accumulator, currentPoints) =>
+                      accumulator + currentPoints.points,
+                    0,
+                  )}
                 </Table.Cell>
               </Table.Row>
             </>

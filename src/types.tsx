@@ -41,13 +41,6 @@ export type Meeting = {
   attendances: Attendance[];
 };
 
-export type PointRecord = {
-  id: number;
-  points: number;
-  meetingId: number;
-  teamId: number;
-};
-
 export type Attendance = {
   id: number;
   meetingId: number;
@@ -62,4 +55,12 @@ export type Membership = {
     firstName: string;
     lastName: string;
   };
+};
+
+export type PointRecord = {
+  id: number;
+  points: number;
+  meetingId: number;
+  teamId: number;
+  team: Team;
 };

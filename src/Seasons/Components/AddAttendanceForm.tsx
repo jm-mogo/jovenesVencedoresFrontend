@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import { Meeting, Membership, Team, Teen } from "../../types";
 import { Button } from "flowbite-react";
 
-export default function AddAttendanceForm({ meeting }: { meeting: Meeting }) {
+export default function AddAttendanceForm({
+  meeting,
+  fetchMeeting,
+}: {
+  meeting: Meeting;
+  fetchMeeting: any;
+}) {
   const [teamMemberships, setTeamMemberships] = useState<Membership[]>([]);
 
   const meetingId = meeting.id;
@@ -33,8 +39,8 @@ export default function AddAttendanceForm({ meeting }: { meeting: Meeting }) {
       }),
     });
     if (response.ok) {
-      console.log(await response.json());
       fetchTeens();
+      fetchMeeting();
     }
   };
 
