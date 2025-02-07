@@ -8,8 +8,11 @@ import {
   HiBriefcase,
 } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { useAuth } from "./hooks/useAuth";
+import LogoutButton from "./Components/logoutButton";
 
 export function SidebarComponent() {
+  const isAuthorized = useAuth("owner");
   return (
     <Sidebar aria-label="Default sidebar example" className="h-screen ">
       <Sidebar.Items>
@@ -26,11 +29,14 @@ export function SidebarComponent() {
           <Link to={"/parents"}>
             <Sidebar.Item icon={HiUsers}>Representantes</Sidebar.Item>
           </Link>
-          <Sidebar.Item href="#" icon={HiBriefcase}>
-            Equipo de trabajo
-          </Sidebar.Item>
+          {isAuthorized && (
+            <Sidebar.Item href="#" icon={HiBriefcase}>
+              Equipo de trabajo
+            </Sidebar.Item>
+          )}
         </Sidebar.ItemGroup>
       </Sidebar.Items>
+      <LogoutButton />
     </Sidebar>
   );
 }

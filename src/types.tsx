@@ -64,3 +64,18 @@ export type PointRecord = {
   teamId: number;
   team: Team;
 };
+
+export type Group = {
+  id: number;
+  name: string;
+  churchName: string;
+  users: User[];
+};
+
+export type User = {
+  id: number;
+  username: string;
+  password: string;
+  groupId: number;
+  role: "primaryOwner" | "owner" | "admin" | "viewer";
+};
