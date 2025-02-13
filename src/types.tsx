@@ -77,5 +77,7 @@ export type User = {
   username: string;
   password: string;
   groupId: number;
-  role: "primaryOwner" | "owner" | "admin" | "viewer";
+  role: Role;
 };
+
+export type Role = "primaryOwner" | "owner" | "admin" | "viewer";
