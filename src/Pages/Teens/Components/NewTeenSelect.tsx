@@ -21,12 +21,6 @@ const NewTeenSelect = ({ name, control, label, error }: Props) => {
         name={name}
         control={control}
         render={({ field }) => (
-          //   <TextInput
-          //     id={name}
-          //     type={type}
-          //     {...field}
-          //     className={`${error ? "text-red-900" : ""}`}
-          //   />
           <Select id={name} {...field}>
             {parents.map((parent: Parent) => (
               <option value={parent.id}>

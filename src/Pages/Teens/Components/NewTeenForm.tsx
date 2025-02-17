@@ -1,8 +1,6 @@
-import { Label, Select, Button } from "flowbite-react";
-import { TextInput } from "flowbite-react/components/TextInput";
-import { useRef, useState } from "react";
-import { Parent, Teen } from "../../../types";
-import { useFetchParents } from "../../../hooks/useFetchParents";
+import { Button } from "flowbite-react";
+import { Teen } from "../../../types";
+
 import { fetchPost } from "../../../hooks/fetchPost";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -28,37 +26,24 @@ export default function NewTeenForm({
     resolver: zodResolver(teenCreateSchema),
     mode: "onBlur",
   });
-  // const firstNameInputRef = useRef<HTMLInputElement>(null);
-  // const lastNameInputRef = useRef<HTMLInputElement>(null);
-  // const [genderInput, setGenderInput] = useState(undefined);
-  // const dateOfBirthInputRef = useRef<HTMLInputElement>(null);
-  // const phoneNumberInputRef = useRef<HTMLInputElement>(null);
-  // const addressInputRef = useRef<HTMLInputElement>(null);
-  // const [parentIdSelected, setParentIdSelected] = useState(1);
 
-  const onSubmit: SubmitHandler<TeenCreateValues> = (data) => {
+  const onSubmit: SubmitHandler<TeenCreateValues> = async (data) => {
+    data.dateOfBirth = new Date(data.dateOfBirth).toISOString();
+
     console.log(data);
 
-    // try {
-    //   const response = await fetchPost("/teens", data);
-    //   // const {response} = await fetch("http://127.0.0.1:8800/teens", {
-    //   //   method: "POST",
-    //   //   headers: {
-    //   //     "Content-Type": "application/json",
-    //   //     Authorization: token ? token : "",
-    //   //   },
-    //   //   body: JSON.stringify(data),
-    //   // });
-    //   // console.log(response);
-    //   // console.log(await response.json());
+    try {
+      const response = await fetchPost("/teens", data);
 
-    //   if (response.ok) {
-    //     fetchData();
-    //     // document.getElementById("submitBtn")?.click();
-    //   }
-    // } catch (error) {
-    //   console.error("Error during login:", error);
-    // }
+      console.log(response);
+
+      if (response.ok) {
+        document.getElementById("submitBtn")?.click();
+        fetchData();
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
   };
 
   return (

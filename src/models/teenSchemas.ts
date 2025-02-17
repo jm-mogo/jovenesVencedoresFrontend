@@ -11,7 +11,11 @@ export const teenCreateSchema = z.object({
     .length(11, "El número de teléfono debe tener 11 dígitos")
     .optional(),
   address: z.string().optional(),
-  parentId: z.string().optional().default("1"),
+  parentId: z
+    .number()
+    .or(z.string().regex(/\d+/).transform(Number))
+    .optional()
+    .default("1"),
 });
 
 export type TeenCreateValues = z.infer<typeof teenCreateSchema>;

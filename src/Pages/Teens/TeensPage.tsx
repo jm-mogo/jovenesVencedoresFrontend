@@ -5,7 +5,7 @@ import NewTeenForm from "./Components/NewTeenForm";
 import TeensTable from "./Components/TeensTable";
 
 export default function TeensPage() {
-  const { data, loading, error, fetchData } = useFetch<Teen[]>("/teens");
+  const { data, fetchData } = useFetch<Teen[]>("/teens");
   const teens = data ? data : [];
 
   return (
