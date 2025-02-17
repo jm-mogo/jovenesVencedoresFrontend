@@ -8,8 +8,8 @@ import {
   HiBriefcase,
 } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { useAuth } from "./hooks/useAuth";
-import LogoutButton from "./Components/logoutButton";
+import { useAuth } from "../hooks/useAuth";
+import LogoutButton from "../Components/logoutButton";
 
 export function SidebarComponent() {
   const isAuthorized = useAuth("owner");

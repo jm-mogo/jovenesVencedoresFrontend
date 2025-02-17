@@ -1,153 +1,134 @@
 import { Label, Select, Button } from "flowbite-react";
 import { TextInput } from "flowbite-react/components/TextInput";
 import { useRef, useState } from "react";
-import { Teen } from "../../../types";
+import { Parent, Teen } from "../../../types";
 import { useFetchParents } from "../../../hooks/useFetchParents";
+import { fetchPost } from "../../../hooks/fetchPost";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler } from "react-hook-form";
+import {
+  teenCreateSchema,
+  TeenCreateValues,
+} from "../../../models/teenSchemas";
+import NewTeenInput from "./NewTeenInput";
+import NewTeenRadio from "./NewTeenRadio";
+import NewTeenSelect from "./NewTeenSelect";
 
 export default function NewTeenForm({
-  teens,
-  setTeens,
+  fetchData,
 }: {
   teens: Teen[];
-  setTeens: Function;
+  fetchData: () => void;
 }) {
-  const firstNameInputRef = useRef<HTMLInputElement>(null);
-  const lastNameInputRef = useRef<HTMLInputElement>(null);
-  const [genderInput, setGenderInput] = useState(undefined);
-  const dateOfBirthInputRef = useRef<HTMLInputElement>(null);
-  const phoneNumberInputRef = useRef<HTMLInputElement>(null);
-  const addressInputRef = useRef<HTMLInputElement>(null);
-  const [parentIdSelected, setParentIdSelected] = useState(1);
-  const { parents } = useFetchParents();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TeenCreateValues>({
+    resolver: zodResolver(teenCreateSchema),
+    mode: "onBlur",
+  });
+  // const firstNameInputRef = useRef<HTMLInputElement>(null);
+  // const lastNameInputRef = useRef<HTMLInputElement>(null);
+  // const [genderInput, setGenderInput] = useState(undefined);
+  // const dateOfBirthInputRef = useRef<HTMLInputElement>(null);
+  // const phoneNumberInputRef = useRef<HTMLInputElement>(null);
+  // const addressInputRef = useRef<HTMLInputElement>(null);
+  // const [parentIdSelected, setParentIdSelected] = useState(1);
 
-  const handleChangeParentId = (e: any) => {
-    setParentIdSelected(Number(e.target.value));
-  };
+  const onSubmit: SubmitHandler<TeenCreateValues> = (data) => {
+    console.log(data);
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const data: any = {
-      firstName: firstNameInputRef.current?.value,
-      lastName: lastNameInputRef.current?.value,
-      gender: genderInput,
-      dateOfBirth: dateOfBirthInputRef.current?.value,
-      parentId: parentIdSelected,
-    };
+    // try {
+    //   const response = await fetchPost("/teens", data);
+    //   // const {response} = await fetch("http://127.0.0.1:8800/teens", {
+    //   //   method: "POST",
+    //   //   headers: {
+    //   //     "Content-Type": "application/json",
+    //   //     Authorization: token ? token : "",
+    //   //   },
+    //   //   body: JSON.stringify(data),
+    //   // });
+    //   // console.log(response);
+    //   // console.log(await response.json());
 
-    if (phoneNumberInputRef.current?.value) {
-      data.phoneNumber = phoneNumberInputRef.current.value;
-    }
-    if (addressInputRef.current?.value) {
-      data.address = addressInputRef.current.value;
-    }
-
-    const response = await fetch("http://127.0.0.1:8800/teens", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    if (response.ok) {
-      const { teen } = await response.json();
-      const newTeens = [...teens, teen];
-      setTeens(newTeens);
-    }
+    //   if (response.ok) {
+    //     fetchData();
+    //     // document.getElementById("submitBtn")?.click();
+    //   }
+    // } catch (error) {
+    //   console.error("Error during login:", error);
+    // }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={(e) => e.preventDefault}>
       <div className="space-y-4">
         <h3 className="text-2xl font-medium text-gray-900 dark:text-white">
           Nuevo joven
         </h3>
         <div className="flex gap-2">
-          <div className="mb-2 block">
-            <Label htmlFor="firstName" value="Nombre *" />
-            <TextInput id="firstName" ref={firstNameInputRef} required />
-          </div>
-          <div className="mb-2 block"></div>
-          <div className="mb-2 block">
-            <Label htmlFor="lastName" value="Apellido *" />
+          <NewTeenInput
+            label="Nombre *"
+            name="firstName"
+            type="text"
+            control={control}
+            error={errors.firstName}
+          />
 
-            <TextInput id="lastName" ref={lastNameInputRef} required />
-          </div>
-        </div>
-        <div>
-          <div className="mb-2 block">
-            <Label htmlFor="gender" value="Género *" />
-          </div>
-          <div className="flex gap-4">
-            <div className="flex items-center gap-2">
-              <input
-                type="radio"
-                id="male"
-                name="gender"
-                value="M"
-                onClick={(event: any) => setGenderInput(event.target.value)}
-                required
-              />
-              <Label htmlFor="male">Masculino</Label>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                type="radio"
-                id="female"
-                name="gender"
-                value="F"
-                onClick={(event: any) => setGenderInput(event.target.value)}
-                required
-              />
-              <Label htmlFor="female">Femenino</Label>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div className="mb-2 block">
-            <Label htmlFor="dateOfBirth" value="Fecha de nacimiento *" />
-          </div>
-          <TextInput
-            id="dateOfBirth"
-            type="date"
-            required
-            ref={dateOfBirthInputRef}
+          <NewTeenInput
+            label="Apellido *"
+            name="lastName"
+            type="text"
+            control={control}
+            error={errors.lastName}
           />
         </div>
+        <NewTeenRadio
+          label="Género *"
+          name="gender"
+          control={control}
+          error={errors.gender}
+        />
+        <NewTeenInput
+          label="Fecha de nacimiento *"
+          name="dateOfBirth"
+          type="date"
+          control={control}
+          error={errors.dateOfBirth}
+        />
 
-        <div className="mb-2 block">
-          <Label htmlFor="phoneNumber" value="Teléfono" />
+        <NewTeenInput
+          label="Telefono *"
+          name="phoneNumber"
+          type="tell"
+          control={control}
+          error={errors.phoneNumber}
+        />
+        <NewTeenInput
+          label="Dirección *"
+          name="address"
+          type="text"
+          control={control}
+          error={errors.address}
+        />
 
-          <TextInput
-            type="tel"
-            minLength={11}
-            maxLength={11}
-            id="phoneNumber"
-            pattern="[0-9]{11}"
-            ref={phoneNumberInputRef}
-          />
-        </div>
-        <div className="mb-2 block">
-          <Label htmlFor="address" value="Dirección" />
-          <TextInput id="address" ref={addressInputRef} />
-        </div>
-
-        <div className="mb-2 block">
-          <Label htmlFor="parentId" value="Representante" />
-          <Select id="parentId" required onChange={handleChangeParentId}>
-            {parents.map((parent: any) => (
-              <option value={parent.id}>
-                {parent.firstName} {parent.lastName}
-              </option>
-            ))}
-          </Select>
-        </div>
+        <NewTeenSelect
+          label="Representante"
+          name="parentId"
+          control={control}
+          error={errors.parentId}
+        />
 
         <div className="text-sm text-gray-500 dark:text-gray-400">
           Todos los campos con * son obligatorios.
         </div>
 
         <div className="flex w-full items-center justify-end gap-4">
-          <Button type="submit">Guardar datos</Button>
+          <Button type="button" onClick={handleSubmit(onSubmit)}>
+            Guardar datos
+          </Button>
+          <button hidden type="submit" id="submitBtn"></button>
         </div>
       </div>
     </form>

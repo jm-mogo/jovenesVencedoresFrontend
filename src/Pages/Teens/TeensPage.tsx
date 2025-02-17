@@ -1,10 +1,12 @@
-import useFetchTeens from "../../hooks/useFetchTeens";
 import NewModal from "../../Components/NewModal";
+import { useFetch } from "../../hooks/useFetch";
+import { Teen } from "../../types";
 import NewTeenForm from "./Components/NewTeenForm";
 import TeensTable from "./Components/TeensTable";
 
 export default function TeensPage() {
-  const { teens, setTeens } = useFetchTeens();
+  const { data, loading, error, fetchData } = useFetch<Teen[]>("/teens");
+  const teens = data ? data : [];
 
   return (
     <>
@@ -12,7 +14,7 @@ export default function TeensPage() {
         Jóvenes
       </h2>
       <NewModal
-        children={<NewTeenForm teens={teens} setTeens={setTeens} />}
+        children={<NewTeenForm teens={teens} fetchData={fetchData} />}
         label={"Nuevo joven"}
       />
       <TeensTable teens={teens} />
