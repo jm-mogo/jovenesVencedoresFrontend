@@ -2,17 +2,38 @@ import { Table } from "flowbite-react/components/Table";
 
 import { Group, User } from "../../../types";
 import { Loader } from "../../../Components/Loader";
+import { AlertModal } from "../../../Components/AlertModal";
 
 export default function UsersTable({
   group,
   loading,
+  fetchData,
 }: {
   group: Group;
   loading: boolean;
+  fetchData: () => void;
 }) {
   if (loading) {
     <Loader />;
   }
+
+  const removeUser = async (userId: number) => {
+    const token = localStorage.getItem("jwtToken");
+    try {
+      const response = await fetch("http://127.0.0.1:8800/users/" + userId, {
+        headers: {
+          Authorization: token ? token : "",
+        },
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        fetchData();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="">
@@ -32,20 +53,17 @@ export default function UsersTable({
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                   {user.role}
                 </Table.Cell>
-                {/* <Table.Cell className="whitespace-nowrap font-medium text-red-500">
+                <Table.Cell className="whitespace-nowrap font-medium text-red-500">
                   <AlertModal
                     label={"Eliminar"}
                     handleYes={() => {
-                      removeMember(membership.id);
+                      removeUser(user.id);
                     }}
                   >
-                    Seguro que quiere remover a{" "}
-                    <strong>
-                      {membership.teen.firstName} {membership.teen.lastName}
-                    </strong>{" "}
-                    del equipo <strong>{team.name} </strong>
+                    Seguro que quiere remover a <strong>{user.username}</strong>{" "}
+                    del grupo <strong>{group.name} </strong>
                   </AlertModal>
-                </Table.Cell> */}
+                </Table.Cell>
               </Table.Row>
             </>
           ))}

@@ -24,7 +24,6 @@ const NewUserRadio = ({ name, control, label, error }: Props) => {
                 id="owner"
                 {...field}
                 value="owner"
-                // onClick={(event: any) => setRole(event.target.value)}
                 required
               />
               <Label htmlFor="owner">Owner</Label>
@@ -35,7 +34,6 @@ const NewUserRadio = ({ name, control, label, error }: Props) => {
                 id="admin"
                 {...field}
                 value="admin"
-                // onClick={(event: any) => setRole(event.target.value)}
                 required
               />
               <Label htmlFor="admin">Admin</Label>
@@ -46,7 +44,6 @@ const NewUserRadio = ({ name, control, label, error }: Props) => {
                 id="viewer"
                 {...field}
                 value="viewer"
-                // onClick={(event: any) => setRole(event.target.value)}
                 required
               />
               <Label htmlFor="viewer">Viewer </Label>

@@ -49,7 +49,7 @@ export default function GroupDetailsPage() {
               label={"Crear usuario"}
             />
           </div>
-          <UsersTable group={group} loading={loading} />
+          <UsersTable group={group} loading={loading} fetchData={fetchData} />
         </div>
       </div>
     </>
