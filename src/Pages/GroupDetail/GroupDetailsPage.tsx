@@ -6,6 +6,7 @@ import NewUserForm from "./components/NewUserForm";
 import NewModal from "../../Components/NewModal";
 import UsersTable from "./components/UsersTable";
 import { useFetch } from "../../hooks/useFetch";
+import ErrorPage from "../../ErrorPage";
 
 export default function GroupDetailsPage() {
   const isAuthorized = useAuth("primaryOwner");
@@ -16,7 +17,7 @@ export default function GroupDetailsPage() {
   const group = data;
 
   if (error) {
-    return "ups";
+    return <ErrorPage />;
   }
 
   if (!isAuthorized) {
