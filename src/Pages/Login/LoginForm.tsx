@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
 import { Button, Label } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
-import InputForm from "../../Components/form/LoginInputs";
+import InputForm from "./LoginInputs";
 
 const LoginForm = (): ReactNode => {
   const {

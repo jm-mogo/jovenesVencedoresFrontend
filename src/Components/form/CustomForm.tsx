@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import InputForm from "./LoginInputs";
+import InputForm from "../../Pages/Login/LoginInputs";
 import { FormValues, schema } from "./models";
 
 const CustomForm = () => {

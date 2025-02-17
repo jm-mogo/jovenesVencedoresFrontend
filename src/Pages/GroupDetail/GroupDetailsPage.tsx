@@ -42,7 +42,7 @@ export default function GroupDetailsPage() {
           </h4>
           <NewModal
             children={<NewUserForm groupId={group.id} fetchGroup={fetchData} />}
-            label={"Añadir asistencias"}
+            label={"Crear usuario"}
           />
         </div>
         <UsersTable group={group} loading={loading} />

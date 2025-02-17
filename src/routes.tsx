@@ -9,7 +9,7 @@
 // import MeetingManagementPage from "./Pages/Seasons/MeetingManagementPage";
 import LoginPage from "./Pages/Login/LoginPage";
 import AdminPage from "./Pages/Admin/AdminPage";
-import GroupDetailsPage from "./Pages/Admin/GroupDetailsPage";
+import GroupDetailsPage from "./Pages/GroupDetail/GroupDetailsPage";
 
 const routes = [
   // {
