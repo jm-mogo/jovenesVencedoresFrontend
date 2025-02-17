@@ -29,24 +29,28 @@ export default function GroupDetailsPage() {
 
   return (
     <>
-      <LinkBack to={"/admin"}>
-        <p>Regresar a admin</p>
-      </LinkBack>
-      <h2 className="text-2xl font-medium text-gray-900 dark:text-white">
-        Grupo: {group.name}
-      </h2>
+      <div className="w-full space-y-4 p-4">
+        <LinkBack to={"/admin"}>
+          <p>Regresar a admin</p>
+        </LinkBack>
+        <h2 className="text-2xl font-medium text-gray-900 dark:text-white">
+          Grupo: {group.name}
+        </h2>
 
-      <div className="max-w-lg">
-        <div className="mb-4 flex items-center justify-between">
-          <h4 className="p-4 text-2xl font-medium text-gray-900 dark:text-white">
-            Lista de usuarios
-          </h4>
-          <NewModal
-            children={<NewUserForm groupId={group.id} fetchGroup={fetchData} />}
-            label={"Crear usuario"}
-          />
+        <div className="max-w-lg">
+          <div className="mb-4 flex items-center justify-between">
+            <h4 className="p-4 text-2xl font-medium text-gray-900 dark:text-white">
+              Lista de usuarios
+            </h4>
+            <NewModal
+              children={
+                <NewUserForm groupId={group.id} fetchGroup={fetchData} />
+              }
+              label={"Crear usuario"}
+            />
+          </div>
+          <UsersTable group={group} loading={loading} />
         </div>
-        <UsersTable group={group} loading={loading} />
       </div>
     </>
   );

@@ -1,0 +1,64 @@
+import { Controller, FieldError, Control } from "react-hook-form";
+import { Label } from "flowbite-react";
+import { UserCreateValues } from "../../../models/userSchemas";
+
+interface Props {
+  name: keyof UserCreateValues;
+  control: Control<UserCreateValues>;
+  label: string;
+  error?: FieldError;
+}
+
+const NewUserRadio = ({ name, control, label, error }: Props) => {
+  return (
+    <div>
+      <label htmlFor={name}>{label}</label>
+      <Controller
+        name={name}
+        control={control}
+        render={({ field }) => (
+          <div className="flex gap-4">
+            <div className="flex items-center gap-2">
+              <input
+                type="radio"
+                id="owner"
+                {...field}
+                value="owner"
+                // onClick={(event: any) => setRole(event.target.value)}
+                required
+              />
+              <Label htmlFor="owner">Owner</Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="radio"
+                id="admin"
+                {...field}
+                value="admin"
+                // onClick={(event: any) => setRole(event.target.value)}
+                required
+              />
+              <Label htmlFor="admin">Admin</Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="radio"
+                id="viewer"
+                {...field}
+                value="viewer"
+                // onClick={(event: any) => setRole(event.target.value)}
+                required
+              />
+              <Label htmlFor="viewer">Viewer </Label>
+            </div>
+          </div>
+        )}
+      />
+      <div className="h-4">
+        {error && <p className="text-red-900">{error.message}</p>}
+      </div>
+    </div>
+  );
+};
+
+export default NewUserRadio;
