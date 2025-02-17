@@ -6,6 +6,7 @@ import {
 } from "../../../models/groupSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { fetchPost } from "../../../hooks/fetchPost";
 
 export default function NewGroupForm({ fetchData }: { fetchData: () => void }) {
   const {
@@ -19,16 +20,7 @@ export default function NewGroupForm({ fetchData }: { fetchData: () => void }) {
 
   const onSubmit: SubmitHandler<GroupCreateValues> = (data) => {
     const submitData = async () => {
-      const token = localStorage.getItem("jwtToken");
-
-      const response = await fetch("http://127.0.0.1:8800/groups", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token ? token : "",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetchPost("/groups", data);
       if (response.ok) {
         console.log("succesful");
         document.getElementById("submitBtn")?.click();

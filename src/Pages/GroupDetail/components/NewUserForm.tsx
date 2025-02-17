@@ -7,6 +7,7 @@ import {
   UserCreateValues,
 } from "../../../models/userSchemas";
 import NewUserRadio from "./NewUserRadio";
+import { fetchPost } from "../../../hooks/fetchPost";
 
 export default function NewUserForm({
   groupId,
@@ -29,18 +30,9 @@ export default function NewUserForm({
     data.username = data.username.toLowerCase();
     console.log(data);
 
-    const token = localStorage.getItem("jwtToken");
-
     const register = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8800/users/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token ? token : "",
-          },
-          body: JSON.stringify(data),
-        });
+        const response = await fetchPost("/users/register", data);
 
         if (response.status == 409) {
           control._setErrors({
