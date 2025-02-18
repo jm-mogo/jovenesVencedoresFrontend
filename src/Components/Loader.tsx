@@ -1,8 +1,15 @@
 import { Spinner } from "flowbite-react";
 
-export const Loader = () => {
+interface Props {
+  fullPage?: boolean;
+}
+
+export const Loader = ({ fullPage }: Props) => {
+  console.log(fullPage);
   return (
-    <div className="pt-2">
+    <div
+      className={`flex w-full ${fullPage ? "h-screen" : ""} items-center justify-center pt-2 `}
+    >
       <Spinner aria-label="Extra large spinner example" size="xl" />
     </div>
   );

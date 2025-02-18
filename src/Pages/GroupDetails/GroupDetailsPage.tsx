@@ -7,6 +7,7 @@ import NewModal from "../../Components/NewModal";
 import UsersTable from "./components/UsersTable";
 import { useFetch } from "../../hooks/useFetch";
 import ErrorPage from "../../ErrorPage";
+import { Loader } from "../../Components/Loader";
 
 export default function GroupDetailsPage() {
   const isAuthorized = useAuth("primaryOwner");
@@ -15,6 +16,8 @@ export default function GroupDetailsPage() {
   const { data, error, loading, fetchData } = useFetch<Group>(`/groups/${id}`);
 
   const group = data;
+
+  if (loading) return <Loader fullPage={true} />;
 
   if (error) {
     return <ErrorPage />;
