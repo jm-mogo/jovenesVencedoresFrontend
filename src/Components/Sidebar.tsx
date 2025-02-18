@@ -30,9 +30,7 @@ export function SidebarComponent() {
             <Sidebar.Item icon={HiUsers}>Representantes</Sidebar.Item>
           </Link>
           {isAuthorized && (
-            <Sidebar.Item href="#" icon={HiBriefcase}>
-              Equipo de trabajo
-            </Sidebar.Item>
+            <Sidebar.Item icon={HiBriefcase}>Equipo de trabajo</Sidebar.Item>
           )}
         </Sidebar.ItemGroup>
       </Sidebar.Items>
