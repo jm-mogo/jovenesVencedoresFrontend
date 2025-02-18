@@ -1,10 +1,13 @@
 import NewModal from "../../Components/NewModal";
 import NewParentForm from "./Components/NewParentForm";
-import { useFetchParents } from "../../hooks/useFetchParents";
 import ParentsTable from "./Components/parentsTable";
+import { useFetch } from "../../hooks/useFetch";
+import { Loader } from "../../Components/Loader";
+import { Parent } from "../../types";
 
 export default function Parentspage() {
-  const { parents, setParents } = useFetchParents();
+  const { data, loading, fetchData } = useFetch<Parent[]>("/parents");
+  const parents = data ? data : [];
 
   return (
     <>
@@ -12,10 +15,10 @@ export default function Parentspage() {
         Representantes
       </h2>
       <NewModal
-        children={<NewParentForm parents={parents} setParents={setParents} />}
+        children={<NewParentForm fetchData={fetchData} />}
         label={"Nuevo representante"}
       />
-      <ParentsTable parents={parents} />
+      {loading ? <Loader /> : <ParentsTable parents={parents} />}
     </>
   );
 }

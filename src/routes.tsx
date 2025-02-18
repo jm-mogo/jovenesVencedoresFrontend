@@ -1,7 +1,7 @@
 import App from "./App";
 
 import TeensPage from "./Pages/Teens/TeensPage";
-// import ParentsPage from "./Pages/Parents/ParentsPage";
+import ParentsPage from "./Pages/Parents/ParentsPage";
 import TeenDetailPage from "./Pages/TeenDetails/TeenDetailsPage";
 // import SeasonsPage from "./Pages/Seasons/SeasonsPage";
 // import SeasonDetailPage from "./Pages/Seasons/SeasonDetailPage";
@@ -22,7 +22,7 @@ const routes = [
       // { path: "meetings/:id", element: <MeetingManagementPage /> },
       { path: "teens", element: <TeensPage /> },
       { path: "teens/:id", element: <TeenDetailPage /> },
-      // { path: "parents", element: <ParentsPage /> },
+      { path: "parents", element: <ParentsPage /> },
     ],
   },
   { path: "/login", element: <LoginPage /> },
