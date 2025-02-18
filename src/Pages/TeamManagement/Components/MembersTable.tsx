@@ -1,41 +1,27 @@
 import { Table } from "flowbite-react/components/Table";
-import { useEffect, useState } from "react";
 import { Membership, Team } from "../../../types";
 import { AlertModal } from "../../../Components/AlertModal";
+import { useFetch } from "../../../hooks/useFetch";
+import { fetchDelete } from "../../../hooks/fetchDelete";
 
 export default function MembersTable({
   team,
   fetchTeam,
 }: {
   team: Team;
-  fetchTeam: any;
+  fetchTeam: () => void;
 }) {
   const teamId = team.id;
-  const [memberships, setMemberships] = useState<Membership[]>([]);
 
-  async function fetchTeen() {
-    const response = await fetch(
-      `http://127.0.0.1:8800/teams/${teamId}/members`,
-    );
-    const data = await response.json();
-    setMemberships(data);
-  }
-
-  useEffect(() => {
-    fetchTeen();
-  }, [team]);
+  const { data } = useFetch<Membership[]>(`/teams/${teamId}/members`);
+  const memberships = data ? data : [];
 
   if (memberships == undefined) {
     return "no hay datos";
   }
 
   const removeMember = async (memberId: number) => {
-    const response = await fetch(
-      "http://127.0.0.1:8800/teamMemberships/" + memberId,
-      {
-        method: "DELETE",
-      },
-    );
+    const response = await fetchDelete("/teamMemberships/" + memberId);
     if (response.ok) {
       fetchTeam();
     }
