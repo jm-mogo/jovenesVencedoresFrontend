@@ -1,5 +1,9 @@
 import { Spinner } from "flowbite-react";
 
 export const Loader = () => {
-  return <Spinner aria-label="Extra large spinner example" size="xl" />;
+  return (
+    <div className="pt-2">
+      <Spinner aria-label="Extra large spinner example" size="xl" />
+    </div>
+  );
 };

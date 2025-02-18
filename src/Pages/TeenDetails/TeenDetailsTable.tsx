@@ -3,12 +3,15 @@ import { useParams } from "react-router-dom";
 import dateParser from "../../utils/dateParser";
 import { useFetch } from "../../hooks/useFetch";
 import { Teen } from "../../types";
+import { Loader } from "../../Components/Loader";
 
 export default function TeenDetailsTable() {
   const { id } = useParams<{ id: string }>();
-  const { data } = useFetch<Teen>("/teens/" + id);
+  const { data, loading } = useFetch<Teen>("/teens/" + id);
   const teen = data;
   console.log(data);
+
+  if (loading) return <Loader />;
 
   if (teen == undefined) {
     return <h2>Not found</h2>;
