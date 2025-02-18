@@ -1,31 +1,35 @@
 import { Button, TextInput } from "flowbite-react";
-import { fetchPost } from "../../../hooks/fetchPost";
+import { Season } from "../../../types";
+import {
+  teamCreateSchema,
+  TeamCreateValues,
+} from "../../../models/teamSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import {
-  seasonCreateSchema,
-  SeasonCreateValues,
-} from "../../../models/SeasonSchemas";
+import { fetchPost } from "../../../hooks/fetchPost";
 
-export default function NewSeasonForm({
+export default function NewTeamForm({
+  season,
   fetchData,
 }: {
+  season: Season;
   fetchData: () => void;
 }) {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SeasonCreateValues>({
-    resolver: zodResolver(seasonCreateSchema),
+  } = useForm<TeamCreateValues>({
+    resolver: zodResolver(teamCreateSchema),
     mode: "onBlur",
   });
 
-  const onSubmit: SubmitHandler<SeasonCreateValues> = async (data) => {
-    const response = await fetchPost("/seasons", data);
+  const onSubmit: SubmitHandler<TeamCreateValues> = async (data) => {
+    data.seasonId = season.id;
+
+    const response = await fetchPost("/teams/", data);
     if (response.ok) {
       fetchData();
-      document.getElementById("submitBtn")?.click();
     }
   };
   return (
@@ -33,7 +37,7 @@ export default function NewSeasonForm({
       <form onSubmit={(e) => e.preventDefault()}>
         <div className="space-y-4">
           <h3 className="text-2xl font-medium text-gray-900 dark:text-white">
-            Nueva temporada
+            Nuevo equipo
           </h3>
 
           <div>
@@ -56,6 +60,7 @@ export default function NewSeasonForm({
               )}
             </div>
           </div>
+
           <div className="text-sm text-gray-500 dark:text-gray-400">
             Todos los campos con * son obligatorios.
           </div>
@@ -64,7 +69,6 @@ export default function NewSeasonForm({
             <Button type="button" onClick={handleSubmit(onSubmit)}>
               Guardar datos
             </Button>
-            <button hidden type="submit" id="submitBtn"></button>
           </div>
         </div>
       </form>

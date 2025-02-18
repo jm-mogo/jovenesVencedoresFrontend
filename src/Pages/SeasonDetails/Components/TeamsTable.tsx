@@ -1,25 +1,17 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { Table } from "flowbite-react";
 import { Season, Team } from "../../../types";
+import { useFetch } from "../../../hooks/useFetch";
+import { Loader } from "../../../Components/Loader";
 
 export default function TeamsTable({ season }: { season: Season }) {
   const Navigate = useNavigate();
   const id = season.id;
 
-  const [teams, setTeams] = useState<Team[]>([]);
+  const { data, loading } = useFetch<Team[]>(`/seasons/${id}/teams`);
+  const teams = data ? data : [];
 
-  const fetchTeamsBySeason = async () => {
-    const response = await fetch(`http://127.0.0.1:8800/seasons/${id}/teams`);
-    const data = await response.json();
-
-    setTeams(data);
-  };
-
-  useEffect(() => {
-    fetchTeamsBySeason();
-  }, [season]);
+  if (loading) return <Loader />;
 
   return (
     <div className="">
@@ -50,7 +42,7 @@ export default function TeamsTable({ season }: { season: Season }) {
 
                 <Table.Cell className="whitespace-nowrap text-right font-medium text-gray-900 dark:text-white">
                   {team.points.reduce(
-                    (accumulator, currentPoints) =>
+                    (accumulator, currentPoints: { points: number }) =>
                       accumulator + currentPoints.points,
                     0,
                   )}

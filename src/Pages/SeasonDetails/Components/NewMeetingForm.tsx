@@ -1,28 +1,33 @@
 import { Button, TextInput } from "flowbite-react";
-import { fetchPost } from "../../../hooks/fetchPost";
+import { Season } from "../../../types";
+import {
+  meetingCreateSchema,
+  MeetingCreateValues,
+} from "../../../models/meetingSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import {
-  seasonCreateSchema,
-  SeasonCreateValues,
-} from "../../../models/SeasonSchemas";
+import { fetchPost } from "../../../hooks/fetchPost";
 
-export default function NewSeasonForm({
+export default function NewMeetingForm({
+  season,
   fetchData,
 }: {
+  season: Season;
   fetchData: () => void;
 }) {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SeasonCreateValues>({
-    resolver: zodResolver(seasonCreateSchema),
+  } = useForm<MeetingCreateValues>({
+    resolver: zodResolver(meetingCreateSchema),
     mode: "onBlur",
   });
 
-  const onSubmit: SubmitHandler<SeasonCreateValues> = async (data) => {
-    const response = await fetchPost("/seasons", data);
+  const onSubmit: SubmitHandler<MeetingCreateValues> = async (data) => {
+    data.seasonId = season.id;
+    data.date = new Date(data.date).toISOString();
+    const response = await fetchPost("/meetings", data);
     if (response.ok) {
       fetchData();
       document.getElementById("submitBtn")?.click();
@@ -33,29 +38,30 @@ export default function NewSeasonForm({
       <form onSubmit={(e) => e.preventDefault()}>
         <div className="space-y-4">
           <h3 className="text-2xl font-medium text-gray-900 dark:text-white">
-            Nueva temporada
+            Registrar reunión
           </h3>
 
           <div>
-            <label htmlFor="name">Nombre *</label>
+            <label htmlFor="date">Fecha *</label>
             <Controller
-              name="name"
+              name="date"
               control={control}
               render={({ field }) => (
                 <TextInput
-                  id="name"
-                  type="text"
+                  id="date"
+                  type="date"
                   {...field}
-                  className={`${errors.name ? "text-red-900" : ""}`}
+                  className={`${errors.date ? "text-red-900" : ""}`}
                 />
               )}
             />
             <div className="h-4">
-              {errors.name && (
-                <p className="text-red-900">{errors.name.message}</p>
+              {errors.date && (
+                <p className="text-red-900">{errors.date.message}</p>
               )}
             </div>
           </div>
+
           <div className="text-sm text-gray-500 dark:text-gray-400">
             Todos los campos con * son obligatorios.
           </div>

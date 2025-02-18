@@ -35,6 +35,8 @@ export const useFetch = <T>(url: string): Params<T> => {
 
       const jsonData = await response.json();
 
+      console.log(jsonData);
+
       const data: T = jsonData.data;
 
       setData(data);

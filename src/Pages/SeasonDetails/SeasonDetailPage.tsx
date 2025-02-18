@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Meeting, Season } from "../../types";
 import TeamsTable from "./Components/TeamsTable";
@@ -9,23 +8,21 @@ import NewMeetingForm from "./Components/NewMeetingForm";
 import { Timeline, Button } from "flowbite-react";
 import { HiCalendar, HiArrowNarrowRight } from "react-icons/hi";
 import dateParser from "../../utils/dateParser";
+import { useFetch } from "../../hooks/useFetch";
+import ErrorPage from "../../ErrorPage";
+import { Loader } from "../../Components/Loader";
 
 export default function SeasonDetailPage() {
   const { id } = useParams();
-  const [season, setSeason] = useState<Season>();
+  const { data, loading, error, fetchData } = useFetch<Season>(
+    "/seasons/" + id,
+  );
+  const season = data;
 
-  async function featchSeason() {
-    const response = await fetch(`http://127.0.0.1:8800/seasons/${id}`);
-    const data: Season = await response.json();
-    setSeason(data);
-  }
+  if (loading) return <Loader fullPage={true} />;
 
-  useEffect(() => {
-    featchSeason();
-  }, []);
-
-  if (season === undefined) {
-    return <h1>No se encontró</h1>;
+  if (!season || error) {
+    return <ErrorPage />;
   }
 
   return (
@@ -44,7 +41,7 @@ export default function SeasonDetailPage() {
             Equipos
           </h4>
           <NewModal
-            children={<NewTeamForm season={season} setSeason={setSeason} />}
+            children={<NewTeamForm season={season} fetchData={fetchData} />}
             label={"Nuevo equipo"}
           />
         </div>
@@ -57,7 +54,7 @@ export default function SeasonDetailPage() {
             Reuniones
           </h4>
           <NewModal
-            children={<NewMeetingForm season={season} setSeason={setSeason} />}
+            children={<NewMeetingForm season={season} fetchData={fetchData} />}
             label={"Registrar reunión"}
           />
         </div>
