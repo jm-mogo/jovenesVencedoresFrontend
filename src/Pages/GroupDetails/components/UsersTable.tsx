@@ -3,6 +3,7 @@ import { Table } from "flowbite-react/components/Table";
 import { Group, User } from "../../../types";
 import { Loader } from "../../../Components/Loader";
 import { AlertModal } from "../../../Components/AlertModal";
+import { fetchDelete } from "../../../hooks/fetchDelete";
 
 export default function UsersTable({
   group,
@@ -18,14 +19,8 @@ export default function UsersTable({
   }
 
   const removeUser = async (userId: number) => {
-    const token = localStorage.getItem("jwtToken");
     try {
-      const response = await fetch("http://127.0.0.1:8800/users/" + userId, {
-        headers: {
-          Authorization: token ? token : "",
-        },
-        method: "DELETE",
-      });
+      const response = await fetchDelete("/users/" + userId);
 
       if (response.ok) {
         fetchData();
