@@ -11,15 +11,23 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import LogoutButton from "../Components/logoutButton";
 
-export function SidebarComponent() {
+export function SidebarComponent({
+  handleClose,
+}: {
+  handleClose?: () => void;
+}) {
   const isAuthorized = useAuth("owner");
   return (
-    <Sidebar aria-label="Default sidebar example" className="h-screen ">
+    <Sidebar
+      aria-label="Sidebar with multi-level dropdown example"
+      className="[&>div]:bg-transparent [&>div]:p-0"
+    >
       <Sidebar.Items>
-        <Sidebar.ItemGroup>
-          <Sidebar.Item href="#" icon={HiChartPie}>
-            Dashboard
-          </Sidebar.Item>
+        <Sidebar.ItemGroup onClick={handleClose}>
+          <Link to="/">
+            <Sidebar.Item icon={HiChartPie}>Dashboard</Sidebar.Item>
+          </Link>
+
           <Link to={"/seasons"}>
             <Sidebar.Item icon={HiViewBoards}>Temporadas</Sidebar.Item>
           </Link>

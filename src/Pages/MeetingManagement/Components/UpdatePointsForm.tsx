@@ -6,7 +6,6 @@ import {
 } from "../../../models/pointRecord";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { fetchPost } from "../../../hooks/fetchPost";
 import { fetchPut } from "../../../hooks/fetchPut";
 
 export default function UpdatePointsForm({

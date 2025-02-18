@@ -1,11 +1,14 @@
 import { Outlet } from "react-router-dom";
 import { SidebarComponent } from "./Components/Sidebar";
 
+import NavMenu from "./Components/navMenu";
+
 function App() {
   return (
     <>
+      <NavMenu />
       <div className="flex flex-row">
-        <div className="sticky top-0 h-screen">
+        <div className="sticky top-0 hidden h-screen bg-gray-100 p-6 md:block">
           <SidebarComponent />
         </div>
 

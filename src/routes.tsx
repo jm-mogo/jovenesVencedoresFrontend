@@ -10,12 +10,14 @@ import MeetingManagementPage from "./Pages/MeetingManagement/MeetingManagementPa
 import LoginPage from "./Pages/Login/LoginPage";
 import AdminPage from "./Pages/Admin/AdminPage";
 import GroupDetailsPage from "./Pages/GroupDetails/GroupDetailsPage";
+import DashboardPage from "./Pages/Dashboard/DashboardPage";
 
 const routes = [
   {
     path: "/",
     element: <App />,
     children: [
+      { path: "", element: <DashboardPage /> },
       { path: "seasons", element: <SeasonsPage /> },
       { path: "seasons/:id", element: <SeasonDetailPage /> },
       { path: "teams/:id", element: <TeamManagementPage /> },
