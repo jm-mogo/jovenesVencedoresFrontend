@@ -6,7 +6,7 @@ import TeenDetailPage from "./Pages/TeenDetails/TeenDetailsPage";
 import SeasonsPage from "./Pages/Seasons/SeasonsPage";
 import SeasonDetailPage from "./Pages/SeasonDetails/SeasonDetailPage";
 import TeamManagementPage from "./Pages/TeamManagement/TeamManagementPage";
-// import MeetingManagementPage from "./Pages/Seasons/MeetingManagementPage";
+import MeetingManagementPage from "./Pages/MeetingManagement/MeetingManagementPage";
 import LoginPage from "./Pages/Login/LoginPage";
 import AdminPage from "./Pages/Admin/AdminPage";
 import GroupDetailsPage from "./Pages/GroupDetails/GroupDetailsPage";
@@ -19,7 +19,7 @@ const routes = [
       { path: "seasons", element: <SeasonsPage /> },
       { path: "seasons/:id", element: <SeasonDetailPage /> },
       { path: "teams/:id", element: <TeamManagementPage /> },
-      // { path: "meetings/:id", element: <MeetingManagementPage /> },
+      { path: "meetings/:id", element: <MeetingManagementPage /> },
       { path: "teens", element: <TeensPage /> },
       { path: "teens/:id", element: <TeenDetailPage /> },
       { path: "parents", element: <ParentsPage /> },

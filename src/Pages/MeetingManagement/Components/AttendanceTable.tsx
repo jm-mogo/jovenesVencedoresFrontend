@@ -1,8 +1,11 @@
 import { Table } from "flowbite-react/components/Table";
-import { useEffect, useState } from "react";
 import { AlertModal } from "../../../Components/AlertModal";
 import { useParams } from "react-router-dom";
-import { Meeting, Membership } from "../../../types";
+import { Membership } from "../../../types";
+import { useFetch } from "../../../hooks/useFetch";
+import ErrorPage from "../../../ErrorPage";
+import { Loader } from "../../../Components/Loader";
+import { fetchDelete } from "../../../hooks/fetchDelete";
 
 type AttandanceMeeting = {
   id: number;
@@ -11,46 +14,24 @@ type AttandanceMeeting = {
   teamMembership: Membership;
 };
 
-export default function AttendanceTable({
-  meeting,
-  fetchMeeting,
-}: {
-  meeting: Meeting;
-  fetchMeeting: any;
-}) {
+export default function AttendanceTable() {
   const { id } = useParams();
-  console.log(id);
-  const [attendancesMeeting, setAttendancesMeeting] = useState<
-    AttandanceMeeting[]
-  >([]);
 
-  async function fetchTeen() {
-    const response = await fetch(
-      `http://127.0.0.1:8800/meetings/${id}/attendances`,
-    );
-    const data = await response.json();
-    setAttendancesMeeting(data);
-  }
+  const { data, loading, error, fetchData } = useFetch<AttandanceMeeting[]>(
+    `/meetings/${id}/attendances`,
+  );
+  const attendancesMeeting = data ? data : [];
 
-  useEffect(() => {
-    fetchTeen();
-  }, [meeting]);
+  if (loading) return <Loader />;
 
-  if (attendancesMeeting == undefined) {
-    return "no hay datos";
-  }
+  if (error) return <ErrorPage />;
 
   console.log(attendancesMeeting);
 
   const removeAttendance = async (attendanceId: number) => {
-    const response = await fetch(
-      "http://127.0.0.1:8800/attendances/" + attendanceId,
-      {
-        method: "DELETE",
-      },
-    );
+    const response = await fetchDelete("/attendances/" + attendanceId);
     if (response.ok) {
-      fetchMeeting();
+      fetchData();
     }
   };
 

@@ -1,45 +1,33 @@
-import { useEffect, useState } from "react";
-import { Meeting, Membership, Team, Teen } from "../../../types";
+import { Meeting, Membership } from "../../../types";
 import { Button } from "flowbite-react";
+import { useFetch } from "../../../hooks/useFetch";
+import { Loader } from "../../../Components/Loader";
+import { fetchPost } from "../../../hooks/fetchPost";
 
 export default function AddAttendanceForm({
   meeting,
   fetchMeeting,
 }: {
   meeting: Meeting;
-  fetchMeeting: any;
+  fetchMeeting: () => void;
 }) {
-  const [teamMemberships, setTeamMemberships] = useState<Membership[]>([]);
+  const { data, loading, error, fetchData } = useFetch<Membership[]>(
+    `/meetings/${meeting.id}/teens`,
+  );
 
-  const meetingId = meeting.id;
-  console.log(meetingId);
+  const teamMemberships = data ? data : [];
 
-  async function fetchTeens() {
-    const response = await fetch(
-      `http://127.0.0.1:8800/meetings/${meetingId}/teens`,
-    );
-    const data = await response.json();
-
-    setTeamMemberships(data);
-  }
-
-  useEffect(() => {
-    fetchTeens();
-  }, []);
+  if (loading) return <Loader />;
+  if (error) return "ERROR";
 
   const addAttendance = async (teamMembershipId: number) => {
-    const response = await fetch("http://127.0.0.1:8800/attendances", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        meetingId: meetingId,
-        teamMembershipId: teamMembershipId,
-      }),
-    });
+    const data = {
+      meetingId: meeting.id,
+      teamMembershipId: teamMembershipId,
+    };
+    const response = await fetchPost("/attendances", data);
     if (response.ok) {
-      fetchTeens();
+      fetchData();
       fetchMeeting();
     }
   };

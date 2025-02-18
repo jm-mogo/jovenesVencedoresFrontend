@@ -1,27 +1,23 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
 import { Table } from "flowbite-react";
-import { PointRecord, Meeting, Season, Team } from "../../../types";
+import { PointRecord, Meeting } from "../../../types";
 import EditModal from "../../../Components/EditModal";
 import UpdatePointsForm from "./UpdatePointsForm";
+import { useFetch } from "../../../hooks/useFetch";
+import { Loader } from "../../../Components/Loader";
+import ErrorPage from "../../../ErrorPage";
 
 export default function PointsTable({ meeting }: { meeting: Meeting }) {
-  //   const Navigate = useNavigate();
   const id = meeting.id;
 
-  const [pointRecords, setPointRecords] = useState<[]>([]);
+  const { data, loading, error, fetchData } = useFetch<PointRecord[]>(
+    `/meetings/${id}/points`,
+  );
 
-  const fetchPointRecords = async () => {
-    const response = await fetch(`http://127.0.0.1:8800/meetings/${id}/points`);
-    const data = await response.json();
+  if (loading) return <Loader />;
 
-    setPointRecords(data);
-  };
+  if (error) return <ErrorPage />;
 
-  useEffect(() => {
-    fetchPointRecords();
-  }, []);
+  const pointRecords = data ? data : [];
 
   return (
     <div className="">
@@ -50,7 +46,7 @@ export default function PointsTable({ meeting }: { meeting: Meeting }) {
                     <UpdatePointsForm
                       pointRecords={pointRecords}
                       teamId={pointRecord.teamId}
-                      fetchPointRecords={fetchPointRecords}
+                      fetchPointRecords={fetchData}
                     />
                   </EditModal>
                 </Table.Cell>

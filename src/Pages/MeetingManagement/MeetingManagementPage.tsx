@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { Meeting, Team } from "../../types";
+import { Meeting } from "../../types";
 import { useParams } from "react-router-dom";
 import LinkBack from "../../Components/LinkBack";
 import dateParser from "../../utils/dateParser";
@@ -7,28 +6,25 @@ import AttendanceTable from "./Components/AttendanceTable";
 import AddAttendanceForm from "./Components/AddAttendanceForm";
 import NewModal from "../../Components/NewModal";
 import PointsTable from "./Components/PointsTable";
+import { useFetch } from "../../hooks/useFetch";
+import ErrorPage from "../../ErrorPage";
+import { Loader } from "../../Components/Loader";
 
 export default function MeetingManagementPage() {
   const { id } = useParams();
-  const [meeting, setMeeting] = useState<Meeting>();
 
-  async function fetchMeeting() {
-    const response = await fetch(`http://127.0.0.1:8800/meetings/${id}`);
-    const data: Meeting = await response.json();
-    setMeeting(data);
-  }
+  const { data, loading, error, fetchData } = useFetch<Meeting>(
+    `/meetings/${id}`,
+  );
+  const meeting = data;
 
-  useEffect(() => {
-    fetchMeeting();
-  }, []);
+  if (loading) return <Loader />;
 
-  if (meeting == undefined) {
-    return "no meeting";
-  }
+  if (!meeting || error) return <ErrorPage />;
 
   return (
     <>
-      <LinkBack to={"/seasons/" + meeting?.seasonId}>
+      <LinkBack to={"/seasons/" + meeting.seasonId}>
         <p>Regresar a temporada</p>
       </LinkBack>
       <h2 className="text-2xl font-medium text-gray-900 dark:text-white">
@@ -50,15 +46,12 @@ export default function MeetingManagementPage() {
           </h4>
           <NewModal
             children={
-              <AddAttendanceForm
-                meeting={meeting}
-                fetchMeeting={fetchMeeting}
-              />
+              <AddAttendanceForm meeting={meeting} fetchMeeting={fetchData} />
             }
             label={"Añadir asistencias"}
           />
         </div>
-        <AttendanceTable meeting={meeting} fetchMeeting={fetchMeeting} />
+        <AttendanceTable />
       </div>
     </>
   );
