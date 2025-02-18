@@ -1,4 +1,4 @@
-import TeenDetailsTable from "./Components/TeenDetailsTable";
+import TeenDetailsTable from "./TeenDetailsTable";
 import LinkBack from "../../Components/LinkBack";
 
 export default function TeenDetails() {
