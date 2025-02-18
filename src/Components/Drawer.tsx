@@ -6,7 +6,7 @@ import { SidebarComponent } from "./Sidebar";
 import { HiMenu } from "react-icons/hi";
 
 export function DrawerSide() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => setIsOpen(false);
 
