@@ -3,7 +3,7 @@ import App from "./App";
 import TeensPage from "./Pages/Teens/TeensPage";
 import ParentsPage from "./Pages/Parents/ParentsPage";
 import TeenDetailPage from "./Pages/TeenDetails/TeenDetailsPage";
-// import SeasonsPage from "./Pages/Seasons/SeasonsPage";
+import SeasonsPage from "./Pages/Seasons/SeasonsPage";
 // import SeasonDetailPage from "./Pages/Seasons/SeasonDetailPage";
 // import TeamManagementPage from "./Pages/Seasons/TeamManagementPage";
 // import MeetingManagementPage from "./Pages/Seasons/MeetingManagementPage";
@@ -16,7 +16,7 @@ const routes = [
     path: "/",
     element: <App />,
     children: [
-      // { path: "seasons", element: <SeasonsPage /> },
+      { path: "seasons", element: <SeasonsPage /> },
       // { path: "seasons/:id", element: <SeasonDetailPage /> },
       // { path: "teams/:id", element: <TeamManagementPage /> },
       // { path: "meetings/:id", element: <MeetingManagementPage /> },

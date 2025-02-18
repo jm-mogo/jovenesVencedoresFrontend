@@ -9,7 +9,6 @@ export default function TeenDetailsTable() {
   const { id } = useParams<{ id: string }>();
   const { data, loading } = useFetch<Teen>("/teens/" + id);
   const teen = data;
-  console.log(data);
 
   if (loading) return <Loader />;
 

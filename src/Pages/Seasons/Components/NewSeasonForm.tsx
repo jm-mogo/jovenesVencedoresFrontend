@@ -1,53 +1,71 @@
-import { Button, Label, TextInput } from "flowbite-react";
-import { useRef } from "react";
-import { Season } from "../../../types";
+import { Button, TextInput } from "flowbite-react";
+import { fetchPost } from "../../../hooks/fetchPost";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import {
+  seasonCreateSchema,
+  SeasonCreateValues,
+} from "../../../models/SeasonSchemas";
 
 export default function NewSeasonForm({
-  seasons,
-  setSeasons,
+  fetchData,
 }: {
-  seasons: Season[];
-  setSeasons: Function;
+  fetchData: () => void;
 }) {
-  const seasonNameInputRef = useRef<HTMLInputElement>(null);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SeasonCreateValues>({
+    resolver: zodResolver(seasonCreateSchema),
+    mode: "onBlur",
+  });
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const data: { name: string | undefined } = {
-      name: seasonNameInputRef.current?.value,
-    };
-
-    const response = await fetch("http://127.0.0.1:8800/seasons", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+  const onSubmit: SubmitHandler<SeasonCreateValues> = async (data) => {
+    console.log(data);
+    const response = await fetchPost("/seasons", data);
     if (response.ok) {
-      const { season } = await response.json();
-      const newSeasons = [...seasons, season];
-      setSeasons(newSeasons);
+      fetchData();
+      document.getElementById("submitBtn")?.click();
     }
   };
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => e.preventDefault()}>
         <div className="space-y-4">
           <h3 className="text-2xl font-medium text-gray-900 dark:text-white">
             Nueva temporada
           </h3>
-          <div className="mb-2 block">
-            <Label htmlFor="firstName" value="Nombre *" />
-            <TextInput id="firstName" ref={seasonNameInputRef} required />
-          </div>
 
+          <div>
+            <label htmlFor="name">Nombre *</label>
+            <Controller
+              name="name"
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  id="name"
+                  type="text"
+                  {...field}
+                  className={`${errors.name ? "text-red-900" : ""}`}
+                />
+              )}
+            />
+            <div className="h-4">
+              {errors.name && (
+                <p className="text-red-900">{errors.name.message}</p>
+              )}
+            </div>
+          </div>
           <div className="text-sm text-gray-500 dark:text-gray-400">
             Todos los campos con * son obligatorios.
           </div>
 
           <div className="flex w-full items-center justify-end gap-4">
-            <Button type="submit">Guardar datos</Button>
+            <Button type="button" onClick={handleSubmit(onSubmit)}>
+              Guardar datos
+            </Button>
+            <button hidden type="submit" id="submitBtn"></button>
           </div>
         </div>
       </form>

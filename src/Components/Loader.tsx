@@ -5,7 +5,6 @@ interface Props {
 }
 
 export const Loader = ({ fullPage }: Props) => {
-  console.log(fullPage);
   return (
     <div
       className={`flex w-full ${fullPage ? "h-screen" : ""} items-center justify-center pt-2 `}

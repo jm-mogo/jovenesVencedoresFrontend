@@ -30,12 +30,8 @@ export default function NewTeenForm({
   const onSubmit: SubmitHandler<TeenCreateValues> = async (data) => {
     data.dateOfBirth = new Date(data.dateOfBirth).toISOString();
 
-    console.log(data);
-
     try {
       const response = await fetchPost("/teens", data);
-
-      console.log(response);
 
       if (response.ok) {
         document.getElementById("submitBtn")?.click();
