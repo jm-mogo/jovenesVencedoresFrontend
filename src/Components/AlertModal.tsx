@@ -1,11 +1,22 @@
 "use client";
 
 import { Button, Modal } from "flowbite-react";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { useUser } from "../hooks/useUser";
 
-export function AlertModal({ children, label, handleYes }) {
+interface Props {
+  children: ReactNode;
+  label: string;
+  handleYes: () => void;
+}
+
+export function AlertModal({ children, label, handleYes }: Props) {
   const [openModal, setOpenModal] = useState(false);
+
+  const user = useUser();
+
+  if (!user || user.role == "viewer") return "";
 
   return (
     <>

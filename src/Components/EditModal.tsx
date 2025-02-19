@@ -1,5 +1,6 @@
 import { Modal } from "flowbite-react";
 import { useState } from "react";
+import { useUser } from "../hooks/useUser";
 
 export default function EditModal({
   children,
@@ -9,6 +10,10 @@ export default function EditModal({
   label: string;
 }) {
   const [openModal, setOpenModal] = useState(false);
+
+  const user = useUser();
+
+  if (!user || user.role == "viewer") return "";
 
   return (
     <>
