@@ -80,9 +80,4 @@ export type User = {
   role: Role;
 };
 
-export enum Role {
-  primaryOwner,
-  owner,
-  admin,
-  viewer,
-}
+type Role = "primaryOwner" | "owner" | "admin" | "viewer";

@@ -29,6 +29,8 @@ export const useFetch = <T>(url: string): Params<T> => {
         },
       });
 
+      console.log(response);
+
       if (!response.ok) {
         throw new Error("Error en la petición");
       }

@@ -38,7 +38,9 @@ export function SidebarComponent({
             <Sidebar.Item icon={HiUsers}>Representantes</Sidebar.Item>
           </Link>
           {isAuthorized && (
-            <Sidebar.Item icon={HiBriefcase}>Equipo de trabajo</Sidebar.Item>
+            <Link to={"/workgroup"}>
+              <Sidebar.Item icon={HiBriefcase}>Equipo de trabajo</Sidebar.Item>
+            </Link>
           )}
         </Sidebar.ItemGroup>
       </Sidebar.Items>

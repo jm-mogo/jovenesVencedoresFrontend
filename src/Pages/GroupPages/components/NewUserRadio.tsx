@@ -1,6 +1,8 @@
 import { Controller, FieldError, Control } from "react-hook-form";
 import { Label } from "flowbite-react";
 import { UserCreateValues } from "../../../models/userSchemas";
+import { useUser } from "../../../hooks/useUser";
+import ErrorPage from "../../../ErrorPage";
 
 interface Props {
   name: keyof UserCreateValues;
@@ -10,6 +12,10 @@ interface Props {
 }
 
 const NewUserRadio = ({ name, control, label, error }: Props) => {
+  const user = useUser();
+
+  if (!user) return <ErrorPage />;
+
   return (
     <div>
       <label htmlFor={name}>{label}</label>
@@ -17,17 +23,20 @@ const NewUserRadio = ({ name, control, label, error }: Props) => {
         name={name}
         control={control}
         render={({ field }) => (
-          <div className="flex gap-4">
-            <div className="flex items-center gap-2">
-              <input
-                type="radio"
-                id="owner"
-                {...field}
-                value="owner"
-                required
-              />
-              <Label htmlFor="owner">Owner</Label>
-            </div>
+          <div className="flex gap-4 pt-1">
+            {user.role == "primaryOwner" && (
+              <div className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  id="owner"
+                  {...field}
+                  value="owner"
+                  required
+                />
+                <Label htmlFor="owner">Owner</Label>
+              </div>
+            )}
+
             <div className="flex items-center gap-2">
               <input
                 type="radio"
