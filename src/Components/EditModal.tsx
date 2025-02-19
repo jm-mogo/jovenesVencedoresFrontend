@@ -17,7 +17,9 @@ export default function EditModal({
 
   return (
     <>
-      <button onClick={() => setOpenModal(true)}>{label}</button>
+      <button className="text-blue-500" onClick={() => setOpenModal(true)}>
+        {label}
+      </button>
       <Modal
         show={openModal}
         size="md"

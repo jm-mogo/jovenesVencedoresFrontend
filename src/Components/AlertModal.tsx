@@ -20,7 +20,9 @@ export function AlertModal({ children, label, handleYes }: Props) {
 
   return (
     <>
-      <button onClick={() => setOpenModal(true)}>{label}</button>
+      <button className="text-red-500" onClick={() => setOpenModal(true)}>
+        {label}
+      </button>
       <Modal
         show={openModal}
         size="md"
@@ -30,12 +32,16 @@ export function AlertModal({ children, label, handleYes }: Props) {
         <Modal.Header />
         <Modal.Body>
           <div className="text-center">
-            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+            <HiOutlineExclamationCircle className="mx-auto size-28 text-gray-400 " />
+            <h3 className="mb-5 text-2xl font-bold text-gray-500">
+              Advertencia
+            </h3>
+            <h3 className="mb-5 text-lg font-normal text-gray-500 ">
               {children}
             </h3>
             <div className="flex justify-center gap-4">
               <Button
+                className="w-full"
                 color="failure"
                 onClick={() => {
                   setOpenModal(false);
@@ -44,7 +50,11 @@ export function AlertModal({ children, label, handleYes }: Props) {
               >
                 Si, seguro
               </Button>
-              <Button color="gray" onClick={() => setOpenModal(false)}>
+              <Button
+                className="w-full"
+                color="gray"
+                onClick={() => setOpenModal(false)}
+              >
                 No, cancelar
               </Button>
             </div>

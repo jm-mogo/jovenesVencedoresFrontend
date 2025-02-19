@@ -3,6 +3,8 @@ import { Membership, Team } from "../../../types";
 import { AlertModal } from "../../../Components/AlertModal";
 import { useFetch } from "../../../hooks/useFetch";
 import { fetchDelete } from "../../../hooks/fetchDelete";
+import EditModal from "../../../Components/EditModal";
+import UpdateTeamMembership from "./UpdateMemberForm";
 
 export default function MembersTable({
   team,
@@ -13,7 +15,9 @@ export default function MembersTable({
 }) {
   const teamId = team.id;
 
-  const { data } = useFetch<Membership[]>(`/teams/${teamId}/members`);
+  const { data, fetchData } = useFetch<Membership[]>(
+    `/teams/${teamId}/members`,
+  );
   const memberships = data ? data : [];
 
   if (memberships == undefined) {
@@ -42,19 +46,26 @@ export default function MembersTable({
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                   {membership.teen.firstName} {membership.teen.lastName}
                 </Table.Cell>
-                <Table.Cell className="whitespace-nowrap font-medium text-red-500">
+                <Table.Cell className="flex gap-2 whitespace-nowrap font-medium ">
                   <AlertModal
                     label={"Eliminar"}
                     handleYes={() => {
                       removeMember(membership.id);
                     }}
                   >
-                    Seguro que quiere remover a{" "}
+                    ¿Seguro que quiere remover a{" "}
                     <strong>
                       {membership.teen.firstName} {membership.teen.lastName}
                     </strong>{" "}
-                    del equipo <strong>{team.name} </strong>
+                    del equipo <strong>{team.name} </strong>?
                   </AlertModal>
+                  <EditModal label="Mover">
+                    <UpdateTeamMembership
+                      team={team}
+                      membership={membership}
+                      fetchMembers={fetchData}
+                    />
+                  </EditModal>
                 </Table.Cell>
               </Table.Row>
             </>

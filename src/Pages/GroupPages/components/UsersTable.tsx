@@ -39,6 +39,7 @@ export default function UsersTable({
         <Table.Head>
           <Table.HeadCell>username</Table.HeadCell>
           <Table.HeadCell>role</Table.HeadCell>
+          <Table.HeadCell>controles</Table.HeadCell>
         </Table.Head>
 
         <Table.Body className="divide-y">
