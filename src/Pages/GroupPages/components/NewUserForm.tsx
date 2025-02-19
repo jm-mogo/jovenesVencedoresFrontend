@@ -28,6 +28,7 @@ export default function NewUserForm({
   const onSubmit: SubmitHandler<UserCreateValues> = (data) => {
     data.groupId = groupId;
     data.username = data.username.toLowerCase();
+    delete data.confirmPassword;
     console.log(data);
 
     const register = async () => {
@@ -77,6 +78,14 @@ export default function NewUserForm({
           type="password"
           control={control}
           error={errors.password}
+        />
+
+        <NewUserInput
+          label="Confirmar contraseña *"
+          name="confirmPassword"
+          type="password"
+          control={control}
+          error={errors.confirmPassword}
         />
 
         <NewUserRadio
