@@ -9,7 +9,6 @@ export const fetchDelete = async (url: string): Promise<Response> => {
       Authorization: token ? token : "",
     },
   });
-  console.log(response);
 
   if (!response.ok) {
     throw new Error("Error en la petición");

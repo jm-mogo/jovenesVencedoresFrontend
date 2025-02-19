@@ -28,7 +28,6 @@ export default function NewParentForm({
       document.getElementById("submitBtn")?.click();
       fetchData();
     }
-    console.log(response);
   };
   return (
     <form onSubmit={(e) => e.preventDefault()}>

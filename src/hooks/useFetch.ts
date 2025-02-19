@@ -22,22 +22,17 @@ export const useFetch = <T>(url: string): Params<T> => {
 
     const token = localStorage.getItem("jwtToken");
     try {
-      console.log(apiURl, url);
       const response = await fetch(apiURl + url, {
         headers: {
           Authorization: token ? token : "",
         },
       });
 
-      console.log(response);
-
       if (!response.ok) {
         throw new Error("Error en la petición");
       }
 
       const jsonData = await response.json();
-
-      console.log(jsonData);
 
       const data: T = jsonData.data;
 

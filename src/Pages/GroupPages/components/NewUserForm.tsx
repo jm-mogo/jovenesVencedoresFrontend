@@ -29,7 +29,6 @@ export default function NewUserForm({
     data.groupId = groupId;
     data.username = data.username.toLowerCase();
     delete data.confirmPassword;
-    console.log(data);
 
     const register = async () => {
       try {

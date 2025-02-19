@@ -22,7 +22,6 @@ export default function NewGroupForm({ fetchData }: { fetchData: () => void }) {
     const submitData = async () => {
       const response = await fetchPost("/groups", data);
       if (response.ok) {
-        console.log("succesful");
         document.getElementById("submitBtn")?.click();
         fetchData();
       }

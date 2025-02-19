@@ -26,8 +26,6 @@ export default function AttendanceTable() {
 
   if (error) return <ErrorPage />;
 
-  console.log(attendancesMeeting);
-
   const removeAttendance = async (attendanceId: number) => {
     const response = await fetchDelete("/attendances/" + attendanceId);
     if (response.ok) {

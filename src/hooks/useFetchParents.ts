@@ -6,16 +6,5 @@ export function useFetchParents() {
 
   const parents = data ? data : [];
 
-  // async function fetchParents() {
-  //   const response = await fetch("http://127.0.0.1:8800/parents");
-  //   const data = await response.json();
-
-  //   setParents(data);
-  // }
-
-  // useEffect(() => {
-  //   fetchParents();
-  // }, []);
-
   return { parents, fetchData };
 }

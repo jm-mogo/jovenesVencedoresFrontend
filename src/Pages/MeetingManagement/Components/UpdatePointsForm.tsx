@@ -31,7 +31,6 @@ export default function UpdatePointsForm({
   )[0];
 
   const onSubmit: SubmitHandler<PointRecordUpdateValues> = async (data) => {
-    console.log(data);
     const response = await fetchPut("/points/" + pointRecord.id, data);
     if (response.ok) {
       fetchPointRecords();

@@ -14,8 +14,6 @@ export const fetchPost = async (
     },
     body: JSON.stringify(dataBody),
   });
-  console.log(response);
-  console.log(await response.json());
 
   if (!response.ok) {
     throw new Error("Error en la petición");
