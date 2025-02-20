@@ -3,8 +3,11 @@ import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import { DrawerSide } from "./Drawer";
 import { Link } from "react-router-dom";
 import LogoutButton from "./logoutButton";
+import { useUser } from "../hooks/useUser";
 
 const NavMenu: React.FC = () => {
+  const user = useUser();
+
   return (
     <Navbar className="bg-gray-900 text-white">
       <Navbar.Brand>
@@ -22,13 +25,13 @@ const NavMenu: React.FC = () => {
           label={<Avatar alt="User settings" rounded />}
         >
           <Dropdown.Header>
-            <span className="block text-sm">Grupo: Juva</span>
             <span className="block truncate text-sm font-medium">
-              alberto.gonzales
+              {user?.username}
             </span>
           </Dropdown.Header>
-          <Dropdown.Item>Cuenta</Dropdown.Item>
-
+          <Link to={"/myaccount"}>
+            <Dropdown.Item>Cuenta</Dropdown.Item>
+          </Link>
           <Dropdown.Divider />
 
           <Dropdown.Item>

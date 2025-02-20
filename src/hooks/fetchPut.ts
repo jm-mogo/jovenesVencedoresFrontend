@@ -15,9 +15,5 @@ export const fetchPut = async (
     body: JSON.stringify(dataBody),
   });
 
-  if (!response.ok) {
-    throw new Error("Error en la petición");
-  }
-
   return response;
 };

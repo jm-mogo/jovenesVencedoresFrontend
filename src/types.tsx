@@ -77,6 +77,7 @@ export type User = {
   username: string;
   password: string;
   groupId: number;
+  groupName: string;
   role: Role;
 };
 

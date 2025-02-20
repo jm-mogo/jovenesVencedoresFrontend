@@ -12,6 +12,7 @@ import AdminPage from "./Pages/Admin/AdminPage";
 import GroupDetailsPage from "./Pages/GroupPages/GroupDetailsPage";
 import DashboardPage from "./Pages/Dashboard/DashboardPage";
 import WorkGroupPage from "./Pages/GroupPages/WorkGroupPage";
+import MyAccountPage from "./Pages/MyAccount/MyAccountPage";
 
 const routes = [
   {
@@ -19,6 +20,7 @@ const routes = [
     element: <App />,
     children: [
       { path: "", element: <DashboardPage /> },
+      { path: "myaccount", element: <MyAccountPage /> },
       { path: "seasons", element: <SeasonsPage /> },
       { path: "seasons/:id", element: <SeasonDetailPage /> },
       { path: "teams/:id", element: <TeamManagementPage /> },
