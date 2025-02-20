@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 const LogoutButton: React.FC = () => {
   const navigate = useNavigate();
@@ -11,9 +10,9 @@ const LogoutButton: React.FC = () => {
   // Redirect to login page or home page
 
   return (
-    <Button onClick={handleLogout} color="red">
-      Log Out
-    </Button>
+    <button onClick={handleLogout} className="text-red-400">
+      Cerrar sesión
+    </button>
   );
 };
 
