@@ -3,7 +3,6 @@
 import { Drawer, Navbar } from "flowbite-react";
 import { useState } from "react";
 import { SidebarComponent } from "./Sidebar";
-import { HiMenu } from "react-icons/hi";
 
 export function DrawerSide() {
   const [isOpen, setIsOpen] = useState(false);
