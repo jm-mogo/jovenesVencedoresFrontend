@@ -6,6 +6,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Button, Label } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import InputForm from "./LoginInputs";
+import { fetchPost } from "../../hooks/fetchPost";
 
 const LoginForm = (): ReactNode => {
   const {
@@ -23,13 +24,7 @@ const LoginForm = (): ReactNode => {
     // Handle login logic here
     const login = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8800/users/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
+        const response = await fetchPost("/users/login", data);
 
         if (response.status == 404) {
           control._setErrors({
