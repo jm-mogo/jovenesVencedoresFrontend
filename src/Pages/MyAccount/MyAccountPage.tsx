@@ -3,6 +3,8 @@ import { useUser } from "../../hooks/useUser";
 import { User } from "../../types";
 import EditModal from "../../Components/EditModal";
 import ChangePasswordForm from "./ChangePasswordForm";
+import { Alert } from "flowbite-react";
+import { HiInformationCircle } from "react-icons/hi";
 
 export default function MyAccountPage() {
   const user = useUser();
@@ -16,9 +18,21 @@ export default function MyAccountPage() {
         <h4 className="text-2xl font-medium text-gray-900 dark:text-white">
           Acciones
         </h4>
-        <EditModal label="Cambiar contraseña">
-          <ChangePasswordForm />
-        </EditModal>
+        {user?.groupName !== "demo" ? (
+          <EditModal label="Cambiar contraseña">
+            {" "}
+            <ChangePasswordForm />
+          </EditModal>
+        ) : (
+          <Alert
+            className="max-w-md"
+            color="failure"
+            icon={HiInformationCircle}
+          >
+            <span className=" font-medium">Advertencia!</span> No puedes cambiar
+            clave de cuenta demo
+          </Alert>
+        )}
       </div>
     </>
   );
