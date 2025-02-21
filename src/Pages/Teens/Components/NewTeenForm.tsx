@@ -43,7 +43,7 @@ export default function NewTeenForm({
   };
 
   return (
-    <form onSubmit={(e) => e.preventDefault}>
+    <form onSubmit={(e) => e.preventDefault()}>
       <div className="space-y-4">
         <h3 className="text-2xl font-medium text-gray-900 dark:text-white">
           Nuevo joven
