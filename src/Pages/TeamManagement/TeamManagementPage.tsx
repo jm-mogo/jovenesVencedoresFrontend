@@ -6,6 +6,8 @@ import AddMemberForm from "./Components/AddMembersForm";
 import NewModal from "../../Components/NewModal";
 import { useFetch } from "../../hooks/useFetch";
 import { Loader } from "../../Components/Loader";
+import EditModal from "../../Components/EditModal";
+import UpdateTeamForm from "./Components/UpdateTeamForm";
 
 export default function TeamManagementPage() {
   const { id } = useParams();
@@ -24,9 +26,15 @@ export default function TeamManagementPage() {
       <LinkBack to={"/seasons/" + team?.seasonId}>
         <p>Regresar a temporada</p>
       </LinkBack>
-      <h2 className="text-2xl font-medium text-gray-900 dark:text-white">
-        Equipo: {team.name}
-      </h2>
+      <div className=" flex max-w-lg items-center justify-between">
+        <h2 className="text-2xl font-medium text-gray-900 dark:text-white">
+          Equipo: {team.name}
+        </h2>
+        <EditModal
+          children={<UpdateTeamForm team={team} fetchData={fetchData} />}
+          label={"Editar"}
+        />
+      </div>
 
       <div className="max-w-lg">
         <div className="mb-4 flex items-center justify-between">
