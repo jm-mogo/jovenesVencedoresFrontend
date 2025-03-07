@@ -11,6 +11,8 @@ import dateParser from "../../utils/dateParser";
 import { useFetch } from "../../hooks/useFetch";
 import ErrorPage from "../../ErrorPage";
 import { Loader } from "../../Components/Loader";
+import EditModal from "../../Components/EditModal";
+import UpdateSeasonForm from "./Components/UpdateSeasonForm";
 
 export default function SeasonDetailPage() {
   const { id } = useParams();
@@ -31,9 +33,16 @@ export default function SeasonDetailPage() {
         <p>Regresar a temporadas</p>
       </LinkBack>
 
-      <h2 className="text-2xl font-medium text-gray-900 dark:text-white">
-        Temporada: {season.name}
-      </h2>
+      <div className=" flex max-w-lg items-center justify-between">
+        <h2 className="text-2xl font-medium text-gray-900 dark:text-white">
+          Temporada: {season.name} <br />
+          Descripción: {season.description}
+        </h2>
+        <EditModal
+          children={<UpdateSeasonForm season={season} fetchData={fetchData} />}
+          label={"Editar"}
+        />
+      </div>
 
       <div className="max-w-lg">
         <div className="mb-4 flex items-center justify-between">

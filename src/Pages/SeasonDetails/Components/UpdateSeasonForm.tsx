@@ -1,28 +1,31 @@
 import { Button, TextInput } from "flowbite-react";
-import { fetchPost } from "../../../hooks/fetchPost";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import {
-  seasonCreateSchema,
-  SeasonCreateValues,
+  seasonUpdateSchema,
+  SeasonUpdateValues,
 } from "../../../models/SeasonSchemas";
+import { Season } from "../../../types";
+import { fetchPut } from "../../../hooks/fetchPut";
 
-export default function NewSeasonForm({
+export default function UpdateSeasonForm({
+  season,
   fetchData,
 }: {
+  season: Season;
   fetchData: () => void;
 }) {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SeasonCreateValues>({
-    resolver: zodResolver(seasonCreateSchema),
+  } = useForm<SeasonUpdateValues>({
+    resolver: zodResolver(seasonUpdateSchema),
     mode: "onBlur",
   });
 
-  const onSubmit: SubmitHandler<SeasonCreateValues> = async (data) => {
-    const response = await fetchPost("/seasons", data);
+  const onSubmit: SubmitHandler<SeasonUpdateValues> = async (data) => {
+    const response = await fetchPut("/seasons/" + season.id, data);
     if (response.ok) {
       fetchData();
       document.getElementById("submitBtn")?.click();
@@ -33,7 +36,7 @@ export default function NewSeasonForm({
       <form onSubmit={(e) => e.preventDefault()}>
         <div className="space-y-4">
           <h3 className="text-2xl font-medium text-gray-900 dark:text-white">
-            Nueva temporada
+            Editar temporada
           </h3>
 
           <div>
@@ -46,6 +49,7 @@ export default function NewSeasonForm({
                   id="name"
                   type="text"
                   {...field}
+                  defaultValue={season.name}
                   className={`${errors.name ? "text-red-900" : ""}`}
                 />
               )}
@@ -65,6 +69,7 @@ export default function NewSeasonForm({
                 <TextInput
                   id="description"
                   type="text"
+                  defaultValue={season.description}
                   {...field}
                   className={`${errors.description ? "text-red-900" : ""}`}
                 />
