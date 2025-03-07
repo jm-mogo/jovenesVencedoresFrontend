@@ -20,6 +20,7 @@ export type Parent = {
 export type Season = {
   id: number;
   name: string;
+  description: string;
   teams: Team[];
   meetings: [];
   members: [];

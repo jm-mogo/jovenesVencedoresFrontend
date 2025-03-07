@@ -56,6 +56,26 @@ export default function NewSeasonForm({
               )}
             </div>
           </div>
+          <div>
+            <label htmlFor="description">Description </label>
+            <Controller
+              name="description"
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  id="description"
+                  type="text"
+                  {...field}
+                  className={`${errors.description ? "text-red-900" : ""}`}
+                />
+              )}
+            />
+            <div className="h-4">
+              {errors.description && (
+                <p className="text-red-900">{errors.description.message}</p>
+              )}
+            </div>
+          </div>
           <div className="text-sm text-gray-500 dark:text-gray-400">
             Todos los campos con * son obligatorios.
           </div>

@@ -25,16 +25,15 @@ export default function SeasonsPage() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="flex flex-wrap gap-6">
+        <div className="flex flex-col gap-6">
           {seasons.map((season: Season) => (
             <Link to={"/seasons/" + season.id}>
-              <Card href="#" className=" max-w-sm">
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+              <Card className="min-h-24 max-w-2xl   ">
+                <h5 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
                   {season.name}
                 </h5>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
-                  Here are the biggest enterprise technology acquisitions of
-                  2021 so far, in reverse chronological order.
+                <p className="text-gray-700 dark:text-gray-400">
+                  {season.description}
                 </p>
               </Card>
             </Link>
