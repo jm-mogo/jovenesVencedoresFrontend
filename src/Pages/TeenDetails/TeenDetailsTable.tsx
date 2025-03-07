@@ -49,7 +49,7 @@ export default function TeenDetailsTable() {
               Género
             </Table.Cell>
             <Table.Cell className="font-medium text-gray-900">
-              {teen.gender == "M" ? "Masculino" : "Fenemino"}
+              {teen.gender == "M" ? "Masculino" : "Femenino"}
             </Table.Cell>
           </Table.Row>
           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
