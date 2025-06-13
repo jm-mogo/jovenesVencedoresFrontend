@@ -25,7 +25,7 @@ const LoginForm = (): ReactNode => {
     const login = async () => {
       try {
         const response = await fetchPost("/users/login", data);
-
+        console.log("Response:", response);
         if (response.status == 404) {
           control._setErrors({
             username: {

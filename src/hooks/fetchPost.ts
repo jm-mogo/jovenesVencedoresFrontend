@@ -5,7 +5,6 @@ export const fetchPost = async (
   dataBody: object,
 ): Promise<Response> => {
   const token = localStorage.getItem("jwtToken");
-
   const response = await fetch(apiURl + url, {
     method: "POST",
     headers: {
@@ -14,6 +13,6 @@ export const fetchPost = async (
     },
     body: JSON.stringify(dataBody),
   });
-
+  console.log("Response:", response);
   return response;
 };
